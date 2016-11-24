@@ -61,6 +61,7 @@ function showView(viewName)
 	$("#viewHome").css("display", "none");
 	$("#viewLogin").css("display", "none");
 	$("#viewRegister").css("display", "none");
+	$("#viewCreate").css("display", "none");
 	
 	//Show the selected view.
     $("#view" + viewName).css("display", "");
