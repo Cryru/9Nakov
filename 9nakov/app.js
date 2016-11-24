@@ -1,6 +1,8 @@
 /**
  * Created by Lucifer on 23-Nov-16.
  */
+
+localStorage.setItem('language', 'en');
 function startApp() {
     sessionStorage.clear(); // Clear user auth data
     showHideMenuLinks();
