@@ -3,12 +3,17 @@ $(startUp);
 function startUp()
 {
 	//Placeholder view.
+	refreshData();
+}
+function refreshData()
+{
 	kinvey.GetData("Memes", undefined, dataGot);
 }
-
 function dataGot(data)
 {
 	$("#posts li").remove();
+	
+	data = data.reverse();
 	
 	for(d of data)
 	{
@@ -22,7 +27,7 @@ function dataGot(data)
 		imageTitle.appendTo(newPost);
 		postImage.appendTo(newPost);
 		newPost.appendTo($("#posts"));
-	
-		console.log(d);
 	}
+	
+	setTimeout(refreshData , 5000);
 }
