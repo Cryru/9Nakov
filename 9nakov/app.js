@@ -1,6 +1,9 @@
 /**
  * Created by Lucifer on 23-Nov-16.
  */
+  const appKey = "kid_SyCmuImMl";
+  const appSecret = "f55fee035573491d8a4f32e3a11f3bc4";
+
 
 localStorage.setItem('language', 'en');
 function startApp() {
