@@ -11,6 +11,7 @@ kinvey.Login("Admin","Admin",successPost,errorPost);
 
 function createPost(){
 console.log("aye ei");
+    let  picture = $('.picture').val();
     let title = $('.title').val();
     let post = {
         title:title,
