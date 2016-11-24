@@ -8,7 +8,7 @@ function startUp()
 }
 
 
-function login (e)
+function login(e)
 {
 	//Prevent the submit event from reseting the page.
 	e.preventDefault();
@@ -23,21 +23,26 @@ function login (e)
 	//Check if invalid username.
 	let usernameMatch = username.match(/[a-zA-Z0-9]+/g);
 	
+	//Check username for invalid symbols.
 	if(username != usernameMatch)
 	{
 		error("Username must only contain numbers and letters.");
 		errorTriggered = true;
 	}
 	
+	//Check if password is too short.
 	if(password.length < 3)
 	{
 		error("Password must be at least 3 characters long.");
 		errorTriggered = true;
 	}
 
+	//Check if any errors.
+	if(errorTriggered) return;
+
 	if(errorTriggered) return;
 	
-	//If logged in, login.
+	//If ready, send a log in request.
     kinvey.Login(username, password, successLogin, errorLogin);
 }
 function successLogin(response) 

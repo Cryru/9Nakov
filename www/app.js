@@ -13,10 +13,10 @@ function startUp()
 	updateNavigationLinks();
 	
 	//Attach navigation functions.
-	//>$("#linkHome").click(showHomeView);
+	$("#linkHome").click(showHomeView);
 	//>$("#createPost").click(showCreatePost);
 	$("#linkLogin").click(showLoginView);
-	//>$("#linkRegister").click(showRegisterView);
+	$("#linkRegister").click(showRegisterView);
 	$("#linkLogout").click(logout);
 	
 	showView("Home");
@@ -60,6 +60,7 @@ function showView(viewName)
 	//Hide all other views.
 	$("#viewHome").css("display", "none");
 	$("#viewLogin").css("display", "none");
+	$("#viewRegister").css("display", "none");
 	
 	//Show the selected view.
     $("#view" + viewName).css("display", "");
@@ -77,9 +78,19 @@ function showLoginView()
 	//Reset the form.
     $('#formLogin').trigger('reset');
 }
+function showRegisterView() 
+{
+	//Check if logged in, in which case register should redirect to home.
+	if(kinvey.LoggedStatus()) { showHomeView(); return; }
+	//Show the register view.
+    showView("Register");
+	//Reset the form.
+    $('#formRegister').trigger('reset');
+}
 function showHomeView()
 {
-	
+	//Display the home view.
+	showView("Home");
 }
 
 

@@ -4,34 +4,57 @@
     <meta charset="UTF-8">
     <title>9Nakov</title>
 	<link rel="stylesheet" type="text/css" href="styles/index.css">
+<!--Libraries-->
     <script src="scripts/Libraries/JQuery.js"></script>
     <script src="scripts/Libraries/SoulKinvey.js"></script>
 	<script src="scripts/Libraries/react.js"></script>
 	<script src="scripts/Libraries/react-dom.js"></script>
 	<script src="scripts/Libraries/babel-standalone.js"></script>
-	<script src="scripts/index.js"></script>
+<!--Application Script-->
+	<script src="app.js"></script>
+<!--Controller Scripts-->
 	<script src="scripts/Controllers/loginController.js"></script>
+	<script src="scripts/Controllers/registerController.js"></script>
 </head>
 <body>
 <!--Navigation-->
 <header class="navigation" id="menu">
 	<div>
-		<a class="navitem" href="#" id="linkHome">Home</a>
-		<a class="navitem" href="#" id="createPost">Create Post</a>
-		<a class="navitem" href="#" id="linkLogin">Login</a>
-		<a class="navitem" href="#" id="linkRegister">Register</a>
-		<a class="navitem" href="#" id="linkLogout">Logout</a>
+		<a class="navitem" id="linkHome">Home</a>
+		<a class="navitem" id="createPost">Create Post</a>
+		<a class="navitem" id="linkLogin">Login</a>
+		<a class="navitem" id="linkRegister">Register</a>
+		<a class="navitem" id="linkLogout">Logout</a>
 		<div class="usertext" id="loggedInUser"></div>
 	</div>
 </header>
 <!--Pages-->
+<!--Home-->
+<section id="viewHome">
+    <h1>Home TODO</h1>
+</section>
+<!--Login-->
 <section id="viewLogin">
-    <h1>Please login</h1>
+    <h1>Login</h1>
     <form id="formLogin">
         <input type="text" id="loginUsername" placeholder="Username" required />
         <input type="password" id="loginPassword" placeholder="Password" required />
         <input type="submit" value="Login"/>
+		Not registered? <a>Click here to register.</a>
     </form>
 </section>
+<!--Register-->
+<section id="viewRegister">
+    <h1>Register</h1>
+    <form id="formRegister">
+        <input type="text" id="regUsername" placeholder="Username" required />
+        <input type="password" id="regPassword" placeholder="Password" required />
+		<input type="password" id="regPasswordConf" placeholder="Password Confirm" required />
+        <input type="submit" value="Register" />
+		Already registered? <a>Click here to login.</a>
+    </form>
+</section>
+
+
 </body>
 </html>
