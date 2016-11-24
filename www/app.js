@@ -99,6 +99,8 @@ function showCreateView()
 	if(!(kinvey.LoggedStatus())) { showHomeView(); return; }
 	//Display the creation view.
 	showView("Create");
+	//Reset the form.
+	$('#formCreate').trigger('reset');
 }
 function showPostView(postid)
 {

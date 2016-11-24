@@ -60,9 +60,12 @@
 	<h1>Post</h1>
      <form id="formCreate">
         <input type="text" id="creTitle" placeholder="Title" required />
-        <input type="file" id="creFile" required />
+		<label>Select an image:</label>
+        <input type="file" id="creFile" accept="image/*" required />
+		<label>Maximum: 9MB</label>
         <input type="submit" value="Post!" />
     </form>
+	<img id="crePreview" />
 </section>
 </body>
 </html>
