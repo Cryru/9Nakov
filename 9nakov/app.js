@@ -21,8 +21,22 @@ $("#linkHome").click(showHomeView);
 $("#linkLogin").click(showLoginView);
 $("#linkRegister").click(showRegisterView);
 $("#linkLogout").click(logoutUser);
+$("#createPost").click(showCreatePost);
 
 // Bind the form submit buttons
 $("#buttonLoginUser").click(loginUser);
 $("#buttonRegisterUser").click(registerUser);
 
+function showLoginView() {
+    showView('login');
+    $('#formLogin').trigger('reset');
+}
+function showView(viewName) {
+    //TODO
+}
+function error(message){
+    //TODO
+}
+function success(message){
+    //TODO
+}
