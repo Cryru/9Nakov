@@ -3,8 +3,8 @@
  */
 $('#buttonRegisterUser').click(register);
 function register (){
-    let username = $('#username').val();
-    let password = $('#passwd').val();
+    let username = $('.username').val();
+    let password = $('.passwd').val();
     kinvey.Register(username,password,successRegister,errorRegister);
 }
 function successRegister() {

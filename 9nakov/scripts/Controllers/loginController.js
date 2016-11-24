@@ -4,8 +4,8 @@
 
 $('#buttonLoginUser').click(login);
 function login (){
-    let username = $('#username').val();
-    let password = $('#passwd').val();
+    let username = $('.username').val();
+    let password = $('.passwd').val();
     kinvey.Login(username,password,successLogin,errorLogin);
 }
 function successLogin(response) {

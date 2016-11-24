@@ -1,0 +1,20 @@
+<section id="viewCreateDankMeme">
+    <!--should remove SoulKinvey later-->
+    <!--vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv-->
+    <script src="../scripts/Libraries/JQuery.js"></script>
+    <script src="../scripts/Libraries/SoulKinvey.js"></script>
+    <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^to be removed-->
+    <script src="../scripts/Controllers/createController.js"></script>
+
+
+    <h1>Create DankMeme</h1>
+    <form id="formCreate">
+        <div>Title</div>
+        <div><input type="text" class="title" required placeholder="InsertTitleHere"/></div>
+        <div>Upload</div>
+        <div><input type="file" id="picture"/></div>
+
+        <div><input type="button"
+                    class="postButton" onclick="createPost()" value="Submit"/></div>
+    </form>
+</section>
