@@ -5,6 +5,7 @@
   const appSecret = "f55fee035573491d8a4f32e3a11f3bc4";
 
 
+ let kinvey = new Kinvey(appKey,appSecret);
 localStorage.setItem('language', 'en');
 function startApp() {
     sessionStorage.clear(); // Clear user auth data
