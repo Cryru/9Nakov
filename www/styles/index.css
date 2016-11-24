@@ -1,0 +1,38 @@
+/* Navigation bar, header parent. */
+.navigation
+{
+	width: 100%;
+	margin: auto;
+	background: lightgray;
+	justify-content: center;
+}
+/* Navigation bar, flexbox host. */
+.navigation div
+{
+	justify-content: center;
+	display: flex;
+}
+/* Navigation Links */
+.navitem
+{
+	float: center;
+	margin: 5px;
+}
+/* Navigation bar, logged in text. */
+.usertext
+{
+	height: 20px;
+	line-height: 30px;
+	margin-left: auto;
+	margin-right: 10px;
+}
+/* Login, Register, Create Post, and Comment Forms */
+form
+{
+	
+}
+/* Text and password input fields. */
+input[type=text], input[type=password]
+{
+	
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>9Nakov</title>
+	<link rel="stylesheet" type="text/css" href="styles/index.css">
+    <script src="scripts/Libraries/JQuery.js"></script>
+    <script src="scripts/Libraries/SoulKinvey.js"></script>
+	<script src="scripts/Libraries/react.js"></script>
+	<script src="scripts/Libraries/react-dom.js"></script>
+	<script src="scripts/Libraries/babel-standalone.js"></script>
+	<script src="scripts/index.js"></script>
+	<script src="scripts/Controllers/loginController.js"></script>
+</head>
+<body>
+<!--Navigation-->
+<header class="navigation" id="menu">
+	<div>
+		<a class="navitem" href="#" id="linkHome">Home</a>
+		<a class="navitem" href="#" id="createPost">Create Post</a>
+		<a class="navitem" href="#" id="linkLogin">Login</a>
+		<a class="navitem" href="#" id="linkRegister">Register</a>
+		<a class="navitem" href="#" id="linkLogout">Logout</a>
+		<div class="usertext" id="loggedInUser"></div>
+	</div>
+</header>
+<!--Pages-->
+<section id="viewLogin">
+    <h1>Please login</h1>
+    <form id="formLogin">
+        <input type="text" id="loginUsername" placeholder="Username" required />
+        <input type="password" id="loginPassword" placeholder="Password" required />
+        <input type="submit" value="Login"/>
+    </form>
+</section>
+</body>
+</html>
