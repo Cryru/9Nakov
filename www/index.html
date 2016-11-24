@@ -15,6 +15,7 @@
 <!--Controller Scripts-->
 	<script src="scripts/Controllers/loginController.js"></script>
 	<script src="scripts/Controllers/registerController.js"></script>
+	<script src="scripts/Controllers/createController.js"></script>
 </head>
 <body>
 <!--Navigation-->
@@ -54,7 +55,13 @@
 		Already registered? <a>Click here to login.</a>
     </form>
 </section>
-
-
+<!--Create Post-->
+<section id="viewCreate">
+     <form id="formCreate">
+        <input type="text" id="creTitle" placeholder="Title" required />
+        <input type="file" id="creFile" required />
+        <input type="submit" value="Post!" />
+    </form>
+</section>
 </body>
 </html>

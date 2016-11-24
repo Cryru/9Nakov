@@ -14,7 +14,7 @@ function startUp()
 	
 	//Attach navigation functions.
 	$("#linkHome").click(showHomeView);
-	//>$("#createPost").click(showCreatePost);
+	$("#createPost").click(showCreateView);
 	$("#linkLogin").click(showLoginView);
 	$("#linkRegister").click(showRegisterView);
 	$("#linkLogout").click(logout);
@@ -92,8 +92,20 @@ function showHomeView()
 	//Display the home view.
 	showView("Home");
 }
-
-
+function showCreateView()
+{
+	//Check if not logged in, in which case redirect to home.
+	if(!(kinvey.LoggedStatus())) { showHomeView(); return; }
+	//Display the creation view.
+	showView("Create");
+}
+function showPostView(postid)
+{
+	//TODO
+}
+//---------------------------
+//Messages
+//---------------------------
 function error(text)
 {
     //TODO
