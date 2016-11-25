@@ -57,10 +57,15 @@ function errorLogin(response)
 	if(response.readystate == 0 && response.status == 0)
 	{
 		error("Network Error");
+		return;
 	}
 	//Wrong credentials.
 	if(response.status == 401)
 	{
 		error("Invalid Username or Password");
+		return;
 	}
+	
+	//Edge case.
+	error("Unknown error occured while logging in.");
 }

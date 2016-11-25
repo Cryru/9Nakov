@@ -1,10 +1,15 @@
 $(startUp);
 
 function startUp()
-{// Login Admin user so that we can access the collection
-	kinvey.Login("guest","guest",getData);
+{
+	//Display message.
+	loading("Loading Posts...");
+	
+	// Login as a PH user so that we can access the collection, if not logged in.
+	if(kinvey.LoggedStatus()) getPosts(); else kinvey.Login("guest","guest",getPosts);
+	
 	//Placeholder view.
-	function getData()
+	function getPosts()
 	{
 		//if the login is successful then we try to access the collection
 		kinvey.GetData("Memes", undefined, dataGot);

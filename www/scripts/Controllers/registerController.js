@@ -60,10 +60,15 @@ function errorRegister(response)
 	if(response.readystate == 0 && response.status == 0)
 	{
 		error("Network Error");
+		return;
 	}
 	//Taken username.
 	if(response.status == 409)
 	{
 		error("That username is taken. Would you like to login instead?");
+		return;
 	}
+	
+	//Edge case.
+	error("Unknown error occured while registering.");
 }

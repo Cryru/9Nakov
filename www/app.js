@@ -19,6 +19,7 @@ function startUp()
 	$("#linkRegister").click(showRegisterView);
 	$("#linkLogout").click(logout);
 	
+	//Load home page.
 	showView("Home");
 }
 
@@ -33,6 +34,7 @@ function updateNavigationLinks()
 	$("#linkLogout").css("display", "none");
 	$("#loggedInUser").text("");
 	
+	//Check if logged in, but not as guest.
 	if(kinvey.LoggedStatus() && kinvey.LoggedUsername() != "guest")
 	{
 		$("#createPost").css("display", "");
@@ -49,11 +51,19 @@ function updateNavigationLinks()
 //Logs the user out, and redirects back to home.
 function logout()
 {
+	//Log curent user out.
 	kinvey.Logout();
-	message("Logged Out");
-	showView("Home");
-	kinvey.Login("guest","guest");
-	updateNavigationLinks();
+	loading("Logging out...");
+	//Log guest in.
+	kinvey.Login("guest","guest", (function() 
+	{  
+		//Redirect to home.
+		showView("Home");
+		//Update navigation links to show as not logged in.
+		updateNavigationLinks();
+		//Display message.
+		message("Logged Out");
+	}));
 }
 //Shows the selected view panel, and hides any other visible panels.
 function showView(viewName) 
@@ -73,8 +83,8 @@ function showView(viewName)
 //---------------------------
 function showLoginView() 
 {
-	//Check if logged in, in which case login should redirect to home.
-	if(kinvey.LoggedStatus()&& kinvey.LoggedUsername() != "guest") { showHomeView(); return; }
+	//Logged users should not be able to login again.
+	if(kinvey.LoggedStatus()&& kinvey.LoggedUsername() == "guest") { showHomeView(); return; }
 	//Show the login view.
     showView("Login");
 	//Reset the form.
@@ -82,8 +92,9 @@ function showLoginView()
 }
 function showRegisterView() 
 {
-	//Check if logged in, in which case register should redirect to home.
-	if(kinvey.LoggedStatus() && kinvey.LoggedUsername() != "guest") { showHomeView(); return; }
+	//Logged users should not be able to register.
+	if(kinvey.LoggedStatus() && kinvey.LoggedUsername() == "guest") { showHomeView(); return; }
+	
 	//Show the register view.
     showView("Register");
 	//Reset the form.
@@ -96,8 +107,9 @@ function showHomeView()
 }
 function showCreateView()
 {
-	//Check if not logged in, in which case redirect to home.
+	//Non-logged users should not be able to post.
 	if(!(kinvey.LoggedStatus() && kinvey.LoggedUsername() !="guest")) { showHomeView(); return; }
+	
 	//Display the creation view.
 	showView("Create");
 	//Reset the form.
@@ -119,4 +131,8 @@ function message(text)
 {
     //TODO
 	console.log(":) - " + text)
+}
+function loading(text)
+{
+	//TODO
 }

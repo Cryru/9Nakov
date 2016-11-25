@@ -23,7 +23,7 @@ function create(e)
 		return;
 	}
 	
-	message("Uploading...");
+	loading("Uploading...");
 	
 	let reader = new FileReader();
 	reader.addEventListener("load", createFileLoader);
@@ -55,6 +55,7 @@ function imageUploaded(response)
 }
 function successCreate(response) 
 {
+	//Display message.
 	message("Post Created!");
 	//Redirect to post page.
     showPostView(response._id);
@@ -68,5 +69,5 @@ function errorCreate(response)
 		return;
 	}
 	
-	error("Uknown error occured while uploading.");
+	error("Unknown error occured while uploading.");
 }
