@@ -1,9 +1,14 @@
 $(startUp);
 
 function startUp()
-{
+{// Login Admin user so that we can access the collection
+	kinvey.Login("Admin","Admin",getData);
 	//Placeholder view.
-	kinvey.GetData("Memes", undefined, dataGot);
+	function getData()
+	{
+		//if the login is successful then we try to access the collection
+		kinvey.GetData("Memes", undefined, dataGot);
+	}
 }
 
 function dataGot(data)
@@ -25,4 +30,10 @@ function dataGot(data)
 	
 		console.log(d);
 	}
+	console.log("ae");
+	//if after accessing the collection the user is Admin we logout
+if(kinvey.LoggedUsername() == "Admin"){
+	kinvey.Logout();
+	updateNavigationLinks();
+}
 }
