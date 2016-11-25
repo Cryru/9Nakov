@@ -8,7 +8,7 @@ function startUp()
 {
 	//Initalize Kinvey application. SoulKinvey.js
 	kinvey = new Kinvey("kid_SyCmuImMl","f55fee035573491d8a4f32e3a11f3bc4");
-	
+
 	//Show appropriate menu links.
 	updateNavigationLinks();
 	
@@ -33,7 +33,7 @@ function updateNavigationLinks()
 	$("#linkLogout").css("display", "none");
 	$("#loggedInUser").text("");
 	
-	if(kinvey.LoggedStatus())
+	if(kinvey.LoggedStatus() && kinvey.LoggedUsername() != "guest")
 	{
 		$("#createPost").css("display", "");
 		$("#linkLogout").css("display", "");
@@ -52,6 +52,7 @@ function logout()
 	kinvey.Logout();
 	message("Logged Out");
 	showView("Home");
+	kinvey.Login("guest","guest");
 	updateNavigationLinks();
 }
 //Shows the selected view panel, and hides any other visible panels.
@@ -73,7 +74,7 @@ function showView(viewName)
 function showLoginView() 
 {
 	//Check if logged in, in which case login should redirect to home.
-	if(kinvey.LoggedStatus()) { showHomeView(); return; }
+	if(kinvey.LoggedStatus()&& kinvey.LoggedUsername() != "guest") { showHomeView(); return; }
 	//Show the login view.
     showView("Login");
 	//Reset the form.
@@ -82,7 +83,7 @@ function showLoginView()
 function showRegisterView() 
 {
 	//Check if logged in, in which case register should redirect to home.
-	if(kinvey.LoggedStatus()) { showHomeView(); return; }
+	if(kinvey.LoggedStatus() && kinvey.LoggedUsername() != "guest") { showHomeView(); return; }
 	//Show the register view.
     showView("Register");
 	//Reset the form.
@@ -96,7 +97,7 @@ function showHomeView()
 function showCreateView()
 {
 	//Check if not logged in, in which case redirect to home.
-	if(!(kinvey.LoggedStatus())) { showHomeView(); return; }
+	if(!(kinvey.LoggedStatus() && kinvey.LoggedUsername() !="guest")) { showHomeView(); return; }
 	//Display the creation view.
 	showView("Create");
 	//Reset the form.

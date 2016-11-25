@@ -2,7 +2,7 @@ $(startUp);
 
 function startUp()
 {// Login Admin user so that we can access the collection
-	kinvey.Login("Admin","Admin",getData);
+	kinvey.Login("guest","guest",getData);
 	//Placeholder view.
 	function getData()
 	{
@@ -32,8 +32,8 @@ function dataGot(data)
 	}
 	console.log("ae");
 	//if after accessing the collection the user is Admin we logout
-if(kinvey.LoggedUsername() == "Admin"){
-	kinvey.Logout();
-	updateNavigationLinks();
-}
+//if(kinvey.LoggedUsername() == "guest"){
+//	kinvey.Logout();
+//	updateNavigationLinks();
+//}
 }
