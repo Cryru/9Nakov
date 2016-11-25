@@ -84,7 +84,7 @@ function showView(viewName)
 function showLoginView() 
 {
 	//Logged users should not be able to login again.
-	if(kinvey.LoggedStatus()&& kinvey.LoggedUsername() == "guest") { showHomeView(); return; }
+	if(kinvey.LoggedStatus() && kinvey.LoggedUsername() != "guest") { showHomeView(); return; }
 	//Show the login view.
     showView("Login");
 	//Reset the form.
@@ -93,7 +93,7 @@ function showLoginView()
 function showRegisterView() 
 {
 	//Logged users should not be able to register.
-	if(kinvey.LoggedStatus() && kinvey.LoggedUsername() == "guest") { showHomeView(); return; }
+	if(kinvey.LoggedStatus() && kinvey.LoggedUsername() != "guest") { showHomeView(); return; }
 	
 	//Show the register view.
     showView("Register");
