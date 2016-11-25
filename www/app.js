@@ -35,7 +35,7 @@ function updateNavigationLinks()
 	$("#loggedInUser").text("");
 	
 	//Check if logged in, but not as guest.
-	if(kinvey.LoggedStatus() && kinvey.LoggedUsername() != "guest")
+	if(kinvey.LoggedUsername() != "guest")
 	{
 		$("#createPost").css("display", "");
 		$("#linkLogout").css("display", "");
@@ -45,6 +45,17 @@ function updateNavigationLinks()
 	{
 		$("#linkLogin").css("display", "");
 		$("#linkRegister").css("display", "");
+	}
+	
+	//Check if not logged in.
+	guestLoginUpdate();
+}
+//Logs in with guest credentials if not logged in.
+function guestLoginUpdate()
+{
+	if(kinvey.LoggedStatus() == false)
+	{
+		kinvey.Login("guest","guest");
 	}
 }
 
@@ -84,7 +95,7 @@ function showView(viewName)
 function showLoginView() 
 {
 	//Logged users should not be able to login again.
-	if(kinvey.LoggedStatus() && kinvey.LoggedUsername() != "guest") { showHomeView(); return; }
+	if(kinvey.LoggedUsername() != "guest") { showHomeView(); return; }
 	//Show the login view.
     showView("Login");
 	//Reset the form.
@@ -93,7 +104,7 @@ function showLoginView()
 function showRegisterView() 
 {
 	//Logged users should not be able to register.
-	if(kinvey.LoggedStatus() && kinvey.LoggedUsername() != "guest") { showHomeView(); return; }
+	if(kinvey.LoggedUsername() != "guest") { showHomeView(); return; }
 	
 	//Show the register view.
     showView("Register");
@@ -108,7 +119,7 @@ function showHomeView()
 function showCreateView()
 {
 	//Non-logged users should not be able to post.
-	if(!(kinvey.LoggedStatus() && kinvey.LoggedUsername() !="guest")) { showHomeView(); return; }
+	if(kinvey.LoggedUsername() == "guest") { showHomeView(); return; }
 	
 	//Display the creation view.
 	showView("Create");
