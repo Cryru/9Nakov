@@ -21,6 +21,8 @@ function dataGot(data)
 {
 	$("#posts li").remove();
 	
+	data = data.reverse();
+	
 	for(d of data)
 	{
 		//Shtoto who needs React
