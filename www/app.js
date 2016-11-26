@@ -55,7 +55,7 @@ function guestLoginUpdate()
 {
 	if(kinvey.LoggedStatus() == false)
 	{
-		kinvey.Login("guest","guest");
+		kinvey.Login("guest","guest", updateNavigationLinks());
 	}
 }
 
