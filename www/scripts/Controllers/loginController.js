@@ -1,7 +1,4 @@
-
-$(startUp);
-
-function startUp()
+function controllerLogin()
 {
 	//Set the login form event.
 	$('#formLogin').submit(login);

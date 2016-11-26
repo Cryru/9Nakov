@@ -1,6 +1,4 @@
-$(startUp);
-
-function startUp()
+function controllerRegister()
 {
 	//Set the register form event.
 	$('#formRegister').submit(register);

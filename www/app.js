@@ -79,6 +79,10 @@ function logout()
 //Shows the selected view panel, and hides any other visible panels.
 function showView(viewName) 
 {
+	clearView();
+	window["view" + viewName]();
+	window["controller" + viewName]();
+	return;
 	//Hide all other views.
 	$("#viewHome").css("display", "none");
 	$("#viewLogin").css("display", "none");
@@ -98,8 +102,6 @@ function showLoginView()
 	if(kinvey.LoggedUsername() != "guest") { showHomeView(); return; }
 	//Show the login view.
     showView("Login");
-	//Reset the form.
-    $('#formLogin').trigger('reset');
 }
 function showRegisterView() 
 {
@@ -107,9 +109,7 @@ function showRegisterView()
 	if(kinvey.LoggedUsername() != "guest") { showHomeView(); return; }
 	
 	//Show the register view.
-    showView("Register");
-	//Reset the form.
-    $('#formRegister').trigger('reset');
+    showView("Register");;
 }
 function showHomeView()
 {

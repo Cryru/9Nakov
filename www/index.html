@@ -17,6 +17,7 @@
 	<script src="scripts/Controllers/registerController.js"></script>
 	<script src="scripts/Controllers/createController.js"></script>
 	<script src="scripts/Controllers/homeController.js"></script>
+	<script type="text/babel" src="views.jsx"></script>
 </head>
 <body>
 <!--Navigation-->
@@ -30,46 +31,10 @@
 		<div class="usertext" id="loggedInUser"></div>
 	</div>
 </header>
+<section id="view">
+</section>
 <!--Pages-->
 <!--Home-->
-<section id="viewHome">
-    <h1>Home TODO</h1>
-	<ul id="posts">
-	
-	</ul>
-</section>
-<!--Login-->
-<section id="viewLogin">
-    <h1>Login</h1>
-    <form id="formLogin">
-        <input type="text" id="loginUsername" placeholder="Username" required />
-        <input type="password" id="loginPassword" placeholder="Password" required />
-        <input type="submit" value="Login"/>
-		Not registered? <a>Click here to register.</a>
-    </form>
-</section>
-<!--Register-->
-<section id="viewRegister">
-    <h1>Register</h1>
-    <form id="formRegister">
-        <input type="text" id="regUsername" placeholder="Username" required />
-        <input type="password" id="regPassword" placeholder="Password" required />
-		<input type="password" id="regPasswordConf" placeholder="Password Confirm" required />
-        <input type="submit" value="Register" />
-		Already registered? <a>Click here to login.</a>
-    </form>
-</section>
-<!--Create Post-->
-<section id="viewCreate">
-	<h1>Post</h1>
-     <form id="formCreate">
-        <input type="text" id="creTitle" placeholder="Title" required />
-		<label>Select an image:</label>
-        <input type="file" id="creFile" accept="image/*" required />
-		<label>Maximum: 9MB</label>
-        <input type="submit" value="Post!" />
-    </form>
-	<img id="crePreview" />
-</section>
+
 </body>
 </html>

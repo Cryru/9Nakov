@@ -1,6 +1,4 @@
-$(startUp);
-
-function startUp()
+function controllerCreate()
 {
 	//Set the register form event.
 	$('#formCreate').submit(create);

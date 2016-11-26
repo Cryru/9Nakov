@@ -1,6 +1,4 @@
-$(startUp);
-
-function startUp()
+function controllerHome()
 {
 	//Display message.
 	loading("Loading Posts...");
@@ -19,23 +17,11 @@ function getPosts()
 
 function dataGot(data)
 {
-	$("#posts li").remove();
-	
+	//Reverse list so we have newest on top.
 	data = data.reverse();
 	
-	for(d of data)
-	{
-		//Shtoto who needs React
-		let newPost = $("<li>");
-		
-		let imageTitle = $("<h2>" + d.title + "</h2>");
-	
-		let postImage = $("<img>");
-		postImage.attr("src", d.file);
-		imageTitle.appendTo(newPost);
-		postImage.appendTo(newPost);
-		newPost.appendTo($("#posts"));
-	}
+	//Send data to React to render.
+	renderPosts(data);
 }
 
 //This should never fire, but will happen on a corrupt login.
