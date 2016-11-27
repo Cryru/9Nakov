@@ -3,7 +3,7 @@ startUp();
 //Clears the view, prevents data from leaking.
 function clearView()
 {
-	ReactDOM.render(<div></div>, document.getElementById('view'));	
+	$("#view").empty();
 }
 
 //The login view rendered in the view div.
@@ -102,17 +102,24 @@ function renderPosts(data)
 	ReactDOM.render(<div>{postList}</div>, document.getElementById('posts'));	
 }
 function viewPost(postId){
-
-        let view = (<div id="viewPost">
+    kinvey.GetData("Memes",postId,function(data){
+        let buttons =<div></div>;
+        if(kinvey.LoggedUsername==data.creator){
+            buttons = <div><button>Edit</button><button>Delete</button><br></br></div>;
+        }
+        let view = (<div id="Post">
 				<div>
-					<h1 id="singlePostTitle"></h1>
-					<div id="singlePostButtons"></div>
-					<img id="singlePostImg"   /></div>
+					<h1>{data.title}</h1>
+                    {buttons}
+					<img src={data.file}/></div>
 				<textarea name="comment"></textarea><br></br>
 				<button>PostComment</button>
 			</div>
         )
         ReactDOM.render(view, document.getElementById('view'));
+    });
+
+
     }
 
 

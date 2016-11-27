@@ -126,7 +126,8 @@ function showCreateView()
 }
 function showPostView(postid)
 {
-	showView("Post");
+	clearView();
+	viewPost(postid);
 
 }
 //---------------------------
