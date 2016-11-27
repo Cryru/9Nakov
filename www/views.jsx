@@ -77,11 +77,16 @@ function renderPosts(data)
 		{
 			super(props);
 		}
-		render() 
+
+		render()
 		{
 			//The post html.
-			return (<div><h1>{this.props.title}</h1><img src={this.props.image}></img></div>);
+			return (<div onClick={this.handleClick.bind(this)} ><h1>{this.props.title}</h1><img  src={this.props.image}></img></div>);
 		}
+        handleClick(){
+			showPostView(this.props.id)
+
+        }
 	}
 	
 	//A list to store rendered posts in.
@@ -90,12 +95,25 @@ function renderPosts(data)
 	//Render all posts as received from Kinvey.
 	for(let d of data)
 	{
-		postList.push(React.createElement(Post, {title: d.title, image: d.file}));
+		postList.push(React.createElement(Post, {title: d.title, image: d.file, id: d._id}));
 	}
 	
 	//Render the rendered posts to the posts element, inside a div due to React limitations.
 	ReactDOM.render(<div>{postList}</div>, document.getElementById('posts'));	
 }
+function viewPost(postId){
+
+        let view = (<div id="viewPost">
+				<div>
+					<h1 id="singlePostTitle"></h1>
+					<div id="singlePostButtons"></div>
+					<img id="singlePostImg"   /></div>
+				<textarea name="comment"></textarea><br></br>
+				<button>PostComment</button>
+			</div>
+        )
+        ReactDOM.render(view, document.getElementById('view'));
+    }
 
 
 

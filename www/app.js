@@ -126,7 +126,8 @@ function showCreateView()
 }
 function showPostView(postid)
 {
-	//TODO
+	showView("Post");
+
 }
 //---------------------------
 //Messages
