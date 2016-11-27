@@ -2,8 +2,6 @@
 let kinvey = {};
 
 //Load when ready.
-$(startUp);
-
 function startUp()
 {
 	//Initalize Kinvey application. SoulKinvey.js
@@ -55,7 +53,7 @@ function guestLoginUpdate()
 {
 	if(kinvey.LoggedStatus() == false)
 	{
-		kinvey.Login("guest","guest", updateNavigationLinks());
+		kinvey.Login("guest","guest");
 	}
 }
 

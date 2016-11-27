@@ -1,3 +1,5 @@
+startUp();
+
 //Clears the view, prevents data from leaking.
 function clearView()
 {
