@@ -81,7 +81,7 @@ function renderPosts(data)
 		render()
 		{
 			//The post html.
-			return (<div onClick={this.handleClick.bind(this)} ><h1>{this.props.title}</h1><img  src={this.props.image}></img></div>);
+			return (<div className="post"  onClick={this.handleClick.bind(this)} ><h1>{this.props.title}</h1><img  src={this.props.image}></img></div>);
 		}
         handleClick(){
 			showPostView(this.props.id)
@@ -101,16 +101,29 @@ function renderPosts(data)
 	//Render the rendered posts to the posts element, inside a div due to React limitations.
 	ReactDOM.render(<div>{postList}</div>, document.getElementById('posts'));	
 }
+function editBtnController(post) {
+	let updateBtn = $("<button id='updateBtn'>Update</button>");
+	let editTitleArea=$("<input type='text'>").val(post.title);
+	$("#delBtn").hide();
+    $("#editBtn").hide();
+    $("#editDelBtns").prepend(updateBtn);
+    $("#postTitle").remove();
+    $("#postInfo").prepend(editTitleArea);
+    //TODO: finish the update button to update the title and do smth after that
+}
+
 function viewPost(postId){
+	//get the post from database
     kinvey.GetData("Memes",postId,function(data){
         let buttons =<div></div>;
-
+//check the post creater if is the same show buttons Edit Delete
         if(kinvey.LoggedID()==data._acl.creator){
-            buttons = <div><button>Edit</button><button>Delete</button><br></br></div>;
+            buttons = <div id="editDelBtns"><button id="editBtn" onClick={function () {editBtnController(data)}}>Edit</button><button id="delBtn">Delete</button><br></br></div>;
         }
-        let view = (<div id="Post">
-				<div>
-					<h1>{data.title}</h1>
+        //create view
+        let view = (<div>
+				<div id="postInfo">
+					<h1 id="postTitle">{data.title}</h1>
                     {buttons}
 					<img src={data.file}/></div>
 				<textarea name="comment"></textarea><br></br>

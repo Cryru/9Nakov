@@ -1,30 +1,56 @@
 /* Navigation bar, header parent. */
 .navigation
 {
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 100;
+	border-top: 0;
 	width: 100%;
-	margin: auto;
-	background: lightgray;
+	margin-top: 0;
+	padding: 0px;
+	background: black;
 	justify-content: center;
 }
 /* Navigation bar, flexbox host. */
 .navigation div
 {
+	padding: 0px;
 	justify-content: center;
 	display: flex;
 }
 /* Navigation Links */
 .navitem
 {
-	float: center;
+	float: left;
 	margin: 5px;
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+.navitem:hover{
+	background-color:#25ac05;
+	cursor:pointer;
 }
 /* Navigation bar, logged in text. */
 .usertext
 {
-	height: 20px;
-	line-height: 30px;
+	margin-top: 20px;
 	margin-left: auto;
 	margin-right: 10px;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+}
+.post
+{
+	padding:20px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	max-width: 400px;
+	max-height: 400px;
 }
 /* Login, Register, Create Post, and Comment Forms */
 form
@@ -41,8 +67,17 @@ form a
 {
 	
 }
-img
+.post img
 {
 	max-width: 400px;
 	max-height: 400px;
+}
+#postInfo{
+	padding: 50px;
+}
+#postInfo img
+{
+
+	max-width: 600px;
+	max-height: 600px;
 }
