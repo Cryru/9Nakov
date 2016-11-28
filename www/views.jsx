@@ -104,7 +104,8 @@ function renderPosts(data)
 function viewPost(postId){
     kinvey.GetData("Memes",postId,function(data){
         let buttons =<div></div>;
-        if(kinvey.LoggedUsername==data.creator){
+
+        if(kinvey.LoggedID()==data._acl.creator){
             buttons = <div><button>Edit</button><button>Delete</button><br></br></div>;
         }
         let view = (<div id="Post">
