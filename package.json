@@ -2,6 +2,7 @@
   "name": "9Nakov",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://cryru.github.io/SoftUni-Project-JSApps",
   "devDependencies": {
     "react-scripts": "0.7.0"
   },
