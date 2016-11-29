@@ -1,7 +1,6 @@
-/* Navigation bar, header parent. */
 .navigation
 {
-	position: fixed;
+  position: fixed;
 	left: 0;
 	top: 0;
 	z-index: 100;
@@ -12,7 +11,6 @@
 	background: black;
 	justify-content: center;
 }
-/* Navigation bar, flexbox host. */
 .navigation div
 {
 	padding: 0px;
@@ -43,41 +41,4 @@
 	color: white;
 	text-align: center;
 	text-decoration: none;
-}
-.post
-{
-	padding:20px;
-	margin-top: 20px;
-	margin-bottom: 20px;
-	max-width: 400px;
-	max-height: 400px;
-}
-/* Login, Register, Create Post, and Comment Forms */
-form
-{
-	
-}
-/* Text and password input fields. */
-input[type=text], input[type=password]
-{
-	
-}
-/* Already registed, Not registered text. */
-form a
-{
-	
-}
-.post img
-{
-	max-width: 400px;
-	max-height: 400px;
-}
-#postInfo{
-	padding: 50px;
-}
-#postInfo img
-{
-
-	max-width: 600px;
-	max-height: 600px;
 }
