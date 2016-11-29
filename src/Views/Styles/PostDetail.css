@@ -1,0 +1,9 @@
+#postInfo img{
+    max-height: 500px;
+    max-width:500px;
+}
+#postInfo textarea{
+    resize:none;
+    width:350px;
+    height: 50px;
+}
