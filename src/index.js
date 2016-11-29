@@ -125,9 +125,24 @@ function postController(postID)
   {
     //Hide loading message.
     loading(false);
+    //getting the comments
+    kinvey.GetData("comments",undefined,dataGotComments,dataErrorGet);
 
+    function dataGotComments(allComments){
+
+        let comments = [];
+        //going through every comment
+        for(let comment of allComments) {
+            //if the postID property of the comment is the same as our postID then we add it to comments
+            if (comment.postID  = postID) {
+                //add the comment to our array
+                comments.push(comment);
+            }
+        }
+    }
     //Send data to React to render.
-    ReactDOM.render(<PostDetailView data={data} user={kinvey.LoggedID()} deleteEvent={deleteEvent} editEvent={editEvent} commentEvent={postComment}/>, document.getElementById('view'));
+    ReactDOM.render(<PostDetailView data={data} comments ={comments} user={kinvey.LoggedID()} deleteEvent={deleteEvent} editEvent={editEvent} commentEvent={postComment}/>, document.getElementById('view'));
+
   }
   //If getting data was unsuccessful.
   function dataErrorGet(response)
