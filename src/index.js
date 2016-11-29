@@ -139,9 +139,10 @@ function postController(postID)
                 comments.push(comment);
             }
         }
+        return comments;
     }
     //Send data to React to render.
-    ReactDOM.render(<PostDetailView data={data} comments ={comments} user={kinvey.LoggedID()} deleteEvent={deleteEvent} editEvent={editEvent} commentEvent={postComment}/>, document.getElementById('view'));
+    ReactDOM.render(<PostDetailView data={data} comments ={dataGotComments()} user={kinvey.LoggedID()} deleteEvent={deleteEvent} editEvent={editEvent} commentEvent={postComment}/>, document.getElementById('view'));
 
   }
   //If getting data was unsuccessful.
