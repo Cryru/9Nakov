@@ -210,7 +210,7 @@ function postController(postID)
 
         let comments=[];
         //going through every comment
-        for(let comment of allComments) {
+        for(let comment of allComments.reverse()) {
             //if the postID property of the comment is the same as our postID then we add it to comments
             if (comment.postID === postID) {
                 //add the comment to our array
