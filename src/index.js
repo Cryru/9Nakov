@@ -239,7 +239,22 @@ function postController(postID)
   function deleteEvent()
   {
     //TODO
-    console.log(this.props.data._id); //The post id.
+      loading(true);
+      // transform the postID in readbale format
+      let postID = this.props.data._id;
+      //send request to Kinvey to delete the post
+      kinvey.DeleteData("Memes",postID,dataDeleted,errorNotDeleted);
+      // if the post is deleted then redirect to home
+      function dataDeleted(){
+          loading(false);
+          message("Succesfully deleted the commment");
+          homeController();
+      }
+      // if there is anything wrong
+      function errorNotDeleted(){
+          loading(false);
+          message("Try again");
+      }
   }
   function editComment() {
       let editBtn=$(`#${this.props.id} button:contains('Edit')`)
@@ -275,7 +290,7 @@ function loginController()
   //Render the login view.
   ReactDOM.render(<LoginView loginEvent={Login}/>, document.getElementById('view'));
 
-  //The event for when the logn form is submitted.
+  //The event for when the login form is submitted.
   function Login(e)
   {
     //Refresh.
