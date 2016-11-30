@@ -75,14 +75,11 @@ function homeController()
     let limit=5;
     //The current page.
     let page = 1;
-
+    //The currently loaded posts.
     let databuffer = [];
-
+    //The total amount of posts.
     let total=0;
-
-    let fuckThisShit =true ;
-
-
+    //If we are loading the next page.
     let pageRequestRunning = false;
 
     //Refresh.
