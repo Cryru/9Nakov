@@ -1,3 +1,35 @@
-Comment {
+.comment {
     padding: 20px;
+    background:grey;
+    margin:10px;
+
+}
+
+.comment button{
+    margin:5px;
+
+}
+.comment h3{
+    font-family: "Segoe UI", "Calibri";
+    background:black;
+    color:white;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 5px;
+    width:70%;
+    margin-bottom: 5px;
+}
+.comment span{
+    font-family: "Segoe UI", "Calibri";
+    color:white;
+    display: inline-block;
+    margin:10px;
+    font-size:20px;
+    width:70%;
+    word-break: break-all;
+}
+.comment div{
+    width:100%;
+    display:block;
+    margin:auto;
 }

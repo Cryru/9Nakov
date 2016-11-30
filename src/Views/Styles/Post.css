@@ -19,6 +19,7 @@
   justify-content: center;
   margin: auto;
   margin-bottom: 10px;
+  cursor:pointer;
 }
 
 .post img

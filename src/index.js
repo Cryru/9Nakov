@@ -12,6 +12,8 @@ import RegisterView from './Views/RegisterView';
 import CreateView from './Views/CreateView';
 import PostDetailView from './Views/PostDetail';
 
+import ModelUsers from './Models/ModelUsers';
+import ModelPosts from './Models/ModelPosts';
 //-------------------------------------------Start Sequence--------------------------------------------\\
 //Initalize Kinvey application. SoulKinvey.js
  let kinvey = new Kinvey("kid_SyCmuImMl","f55fee035573491d8a4f32e3a11f3bc4");
@@ -89,7 +91,7 @@ function homeController()
     //Show loading message.
     loading(true);
     //Check if not logged in, in which case log in, otherwise proceed with request.
-    if(kinvey.LoggedStatus()) getPosts(); else kinvey.Login("guest", "guest", getPosts);
+    if(ModelUsers.loggedStatus(kinvey)) ModelPosts.getPosts(kinvey,getTotal,dataErrorGet); else ModelUsers.loginGuest(kinvey, getPosts);
 
   //Data request.
   function getPosts()
@@ -146,7 +148,11 @@ function homeController()
     //The event to trigger on scroll that checks if we've scrolled to the bottom of the page.
     function scrolltoBottom()
     {
-      if(Math.round($(window).scrollTop() + $(window).height()) >= $(document).height())
+        console.log($(document).height());
+        console.log(Math.round($(window).scrollTop() + $(window).height()));
+        console.log($(window).scrollTop() + $(window).height());
+
+      if(Math.ceil($(window).scrollTop() + $(window).height()) >= $(document).height())
       {
 
           
@@ -171,7 +177,7 @@ function homeController()
     //If the system claims we are not logged in, log in with guest credentials and try again.
     if(response.status === 401)
     {
-       kinvey.Login("guest", "guest", getPosts);
+       ModelUsers.loginGuest(kinvey,ModelPosts.getPosts(kinvey,getTotal,dataErrorGet));
     }
   }
   //The event that is triggered when a post is clicked.
@@ -190,7 +196,7 @@ function postController(postID)
   //Show loading message.
   loading(true);
   //Get the post data.
-  kinvey.GetData("Memes", postID, dataGot, dataErrorGet);
+  ModelPosts.getOnePost(kinvey,postID, dataGot, dataErrorGet);
 
   //If getting data was successful.
   function dataGot(data)
@@ -217,9 +223,9 @@ function postController(postID)
         //Send data to React to render.
         ReactDOM.render(<PostDetailView data={data}
           editCommentHandler={editComment}
-          loggedUser={kinvey.LoggedUsername()}
+          loggedUser={ModelUsers.loggedUsername(kinvey)}
           comments={comments}
-          user={kinvey.LoggedID()}
+          user={ModelUsers.loggedID(kinvey)}
           deleteEvent={deleteEvent}
           editEvent={editEvent}
           commentEvent={postComment}/>, document.getElementById('view'));
@@ -282,10 +288,10 @@ function postController(postID)
   {
      //The post id.
     let text =$('#commentText').val(); //The comment entered.
-      let author = kinvey.LoggedUsername();
-      let postID =this.props.data._id
+      let author = ModelUsers.loggedUsername(kinvey);
+      let postID =this.props.data._id;
       let comment ={author:author,text:text, postID:postID};
-      kinvey.CreateData("comments",comment,successPost)
+      kinvey.CreateData("comments",comment,successPost);
       function successPost() {
           $('#commentText').val("");
           postController(postID);
@@ -340,7 +346,7 @@ function loginController()
     loading(true);
 
   	//If ready, send a log in request.
-    kinvey.Login(username, password, successLogin, errorLogin);
+    ModelUsers.loginUser(kinvey,username, password, successLogin, errorLogin);
   }
 
   //When login is complete.
@@ -421,7 +427,7 @@ function registerController()
 
     //If ready, send a registration request.
     loading(true);
-    kinvey.Register(username, password, successRegister, errorRegister);
+    ModelUsers.registerUser(kinvey,username, password, successRegister, errorRegister);
 
     //When the registration is successful.
     function successRegister(response)
@@ -536,10 +542,10 @@ function createController()
 function logOut()
 {
   //Log curent user out.
-	kinvey.Logout();
+	ModelUsers.logOut(kinvey);
 	loading(true);
 	//Log guest in.
-	kinvey.Login("guest","guest", (function()
+	 ModelUsers.loginGuest(kinvey, (function()
 	{
 		//Redirect to home.
 		homeController();

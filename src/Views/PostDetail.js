@@ -21,7 +21,7 @@ export default class PostDetail extends Component {
           </div>
         }
         if(this.props.comments===undefined||this.props.comments.length===0){
-            comments.push(<div key="1">No Comments for this post</div>)
+            comments.push(<div id="noComment" key="1">No Comments for this post</div>)
         }else{
 
             for (let i = 0; i < this.props.comments.length; i++)
@@ -36,9 +36,9 @@ export default class PostDetail extends Component {
 					        <h1 id="postTitle">{this.props.data.title}</h1>
                             {buttons}
 					        <img alt="" src={this.props.data.file}/></div>
-
+            <hr/>
 				          <textarea id="commentText"></textarea>
-				          <button onClick={this.props.commentEvent.bind(this)}>Comment</button>
+				          <button id="commentBtn"onClick={this.props.commentEvent.bind(this)}>Comment</button>
                          {comments}
 			          </div>
       }

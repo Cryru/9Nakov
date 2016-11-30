@@ -1,0 +1,49 @@
+#formLogin
+ {
+    font-family: 'Ubuntu', 'Lato', sans-serif;
+    font-weight: 400;
+    color:white;
+    width: 300px;
+    position: relative;
+    margin: 60px auto 30px;
+    padding: 10px;
+    overflow: hidden;
+    background: #111;
+    border-radius: 0.4em;
+    border: 1px solid #191919;
+    box-shadow: inset 0 0 2px 1px rgba(255,255,255,0.08), 0 16px 10px -8px rgba(0, 0, 0, 0.6);
+}
+#formLogin input[type="text"], input[type="password"] {
+    width: 95%;
+    float: left;
+    padding: 8px 5px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    background: #1f2124;
+    background: -moz-linear-gradient(#1f2124, #27292c);
+    background: -ms-linear-gradient(#1f2124, #27292c);
+    background: -o-linear-gradient(#1f2124, #27292c);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#1f2124), to(#27292c));
+    background: -webkit-linear-gradient(#1f2124, #27292c);
+    background: linear-gradient(#1f2124, #27292c);
+    border: 1px solid #000;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.1);
+    border-radius: 3px;
+    font-family: 'Ubuntu', 'Lato', sans-serif;
+    color: #fff;
+}
+#formLogin input[type="submit"]{
+width: 100%;
+padding: 8px 5px;
+border: 1px solid #0273dd;
+border: 1px solid rgba(0,0,0,0.4);
+box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), inset 0 10px 10px rgba(255,255,255,0.1);
+border-radius: 3px;
+background: #38a6f0;
+cursor: pointer;
+font-family: 'Ubuntu', 'Lato', sans-serif;
+color: white;
+font-weight: 700;
+font-size: 15px;
+text-shadow: 0 -1px 0 rgba(0,0,0,0.8);
+}
