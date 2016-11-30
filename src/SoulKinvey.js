@@ -81,6 +81,7 @@ const Kinvey = (function()
 		let PostRequest = function(Auth, args, obj, Callback, ErrorCallback)
 		{
 
+
 			let request =
 			{
 				method: "POST",
@@ -90,6 +91,7 @@ const Kinvey = (function()
 				success: Callback,
 				error: ErrorCallback
 			}
+
 
 			$.ajax(request);
 

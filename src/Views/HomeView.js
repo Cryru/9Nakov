@@ -23,6 +23,7 @@ export default class HomeView extends Component {
         for (var i = 0; i < data.length; i++)
         {
           posts.push(<Post key={i} id={data[i]._id} title={data[i].title} image={data[i].file} clickEvent={this.props.viewPostEvent}/>)
+
         }
 
         return <div>

@@ -14,7 +14,7 @@ import PostDetailView from './Views/PostDetail';
 
 //-------------------------------------------Start Sequence--------------------------------------------\\
 //Initalize Kinvey application. SoulKinvey.js
-let kinvey = new Kinvey("kid_SyCmuImMl","f55fee035573491d8a4f32e3a11f3bc4");
+ let kinvey = new Kinvey("kid_SyCmuImMl","f55fee035573491d8a4f32e3a11f3bc4");
 
 //Render the home view.
 homeController();
@@ -123,6 +123,7 @@ function postController(postID)
   //If getting data was successful.
   function dataGot(data)
   {
+
     //Hide loading message.
     loading(false);
     //getting the comments
@@ -130,21 +131,26 @@ function postController(postID)
 
     function dataGotComments(allComments){
 
-        let comments = [];
+        let comments=[];
         //going through every comment
         for(let comment of allComments) {
             //if the postID property of the comment is the same as our postID then we add it to comments
-            if (comment.postID  = postID) {
+            if (comment.postID  == postID) {
                 //add the comment to our array
                 comments.push(comment);
+
+
             }
         }
-        return comments;
+
+
+        ReactDOM.render(<PostDetailView data={data} editCommentHandler={editComment}loggedUser={kinvey.LoggedUsername()} comments ={comments} user={kinvey.LoggedID()} deleteEvent={deleteEvent} editEvent={editEvent} commentEvent={postComment}/>, document.getElementById('view'));
+
     }
     //Send data to React to render.
-    ReactDOM.render(<PostDetailView data={data} comments ={dataGotComments()} user={kinvey.LoggedID()} deleteEvent={deleteEvent} editEvent={editEvent} commentEvent={postComment}/>, document.getElementById('view'));
 
   }
+
   //If getting data was unsuccessful.
   function dataErrorGet(response)
   {
@@ -165,13 +171,33 @@ function postController(postID)
     //TODO
     console.log(this.props.data._id); //The post id.
   }
+  function editComment() {
+      let editBtn=$(`#${this.props.id} button:contains('Edit')`)
+      editBtn.hide();
+      editBtn.parent().append($("<button>Update Comment</button><br/>").on("click",updateComment.bind(this)));
+      let commentSection = $(`#${this.props.id} p`).hide();
+      commentSection.parent().append($("<textarea/>").text(this.props.text))
+      function updateComment() {
+          //TODO:
+
+      }
+
+  }
+
 
   //Triggered when a user attempts to post a comment.
   function postComment()
   {
-    //TODO
-    console.log(this.props.data._id); //The post id.
-    console.log($('#commentText').val()) //The comment entered.
+     //The post id.
+    let text =$('#commentText').val(); //The comment entered.
+      let author = kinvey.LoggedUsername();
+      let postID =this.props.data._id
+      let comment ={author:author,text:text, postID:postID};
+      kinvey.CreateData("comments",comment,successPost)
+      function successPost() {
+          $('#commentText').val("");
+          postController(postID);
+      }
   }
 }
 

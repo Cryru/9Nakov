@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Styles/PostDetail.css';
+import Comment from "./Comment"
 
 
 export default class PostDetail extends Component {
@@ -22,9 +23,11 @@ export default class PostDetail extends Component {
         if(this.props.comments===undefined||this.props.comments.length===0){
             comments.push(<div key="1">No Comments for this post</div>)
         }else{
+
             for (let i = 0; i < this.props.comments.length; i++)
             {
-                comments.push(<Comment key={i} author={this.props.comments[i].author} text={this.props.comments[i].text}/>)
+
+                comments.push(<Comment key={i} id={this.props.comments[i]._id}  editCommentHandler={this.props.editCommentHandler} loggedUser={this.props.loggedUser} author={this.props.comments[i].author} text={this.props.comments[i].text}/>)
             }
         }
 
