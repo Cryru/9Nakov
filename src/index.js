@@ -35,6 +35,9 @@ function refreshSkeleton()
     </div>,
     document.getElementById('root')
   );
+
+  //Clear scroll event.
+  $(window).scroll();
 }
 
 //-------------------------------------------Feedback Functions--------------------------------------------\\
@@ -68,34 +71,23 @@ function loading(show)
 //-------------------------------------------Controllers--------------------------------------------\\
 function homeController()
 {
-    //posts to show
-    const limit=5;
-    //the skip from the query
-    let skip ;
-    kinvey.GetData("Memes/_count",undefined,function (data) {
-        skip=data.count-5;
-        //Refresh.
-        refreshSkeleton();
-        //Render an empty home view.
-        ReactDOM.render(<HomeView />, document.getElementById('view'));
-        //Show loading message.
-        loading(true);
-        //Check if not logged in, in which case log in, otherwise proceed with request.
-        $(window).scroll(function() {
-            if($(window).scrollTop() + $(window).height() == $(document).height()) {
-                getPosts()
-            }
-        });
-        if(kinvey.LoggedStatus()) getPosts(); else kinvey.Login("guest","guest",getPosts);
+    //The number of posts to show per page.
+    let page = 1;
 
-    });
+    //Refresh.
+    refreshSkeleton();
+    //Render an empty home view.
+    ReactDOM.render(<HomeView />, document.getElementById('view'));
+    //Show loading message.
+    loading(true);
+    //Check if not logged in, in which case log in, otherwise proceed with request.
+    if(kinvey.LoggedStatus()) getPosts(); else kinvey.Login("guest", "guest", getPosts);
 
   //Data request.
   function getPosts()
   {
-      console.log(skip)
-    kinvey.GetData(`Memes/?query={}&limit=${limit}&skip=${skip}`, undefined, dataGot, dataErrorGet)
-      skip-=5;
+      //Send a request to kinvey to get all posts.
+      kinvey.GetData(`Memes`, undefined, dataGot, dataErrorGet)
   }
   //If getting data was successful.
   function dataGot(data)
@@ -106,7 +98,27 @@ function homeController()
     data = data.reverse();
 
     //Send data to React to render.
-    ReactDOM.render(<HomeView data={data} viewPostEvent={viewPost}/>, document.getElementById('view'));
+    let homeview = <HomeView data={data} viewPostEvent={viewPost} page={page}/>;
+    ReactDOM.render(homeview, document.getElementById('view'));
+
+    //Attach an event to turn to the next page when scrolling to the bottom of the page.
+    $(window).scroll(scrolltoBottom);
+
+    //The event to trigger on scroll that checks if we've scrolled to the bottom of the page.
+    function scrolltoBottom()
+    {
+      if($(window).scrollTop() + $(window).height() === $(document).height())
+      {
+          nextPage();
+      }
+
+      function nextPage()
+      {
+          page++;
+          homeview = <HomeView data={data} viewPostEvent={viewPost} page={page}/>;
+          ReactDOM.render(homeview, document.getElementById('view'));
+      }
+    }
   }
   //If getting data was unsuccessful.
   //This should never fire, but will happen on a corrupt login.
@@ -115,7 +127,7 @@ function homeController()
     //If the system claims we are not logged in, log in with guest credentials and try again.
     if(response.status === 401)
     {
-      kinvey.Login("guest", "guest", getPosts);
+       kinvey.Login("guest", "guest", getPosts);
     }
   }
   //The event that is triggered when a post is clicked.
@@ -139,7 +151,6 @@ function postController(postID)
   //If getting data was successful.
   function dataGot(data)
   {
-
     //Hide loading message.
     loading(false);
     //getting the comments
@@ -151,7 +162,7 @@ function postController(postID)
         //going through every comment
         for(let comment of allComments) {
             //if the postID property of the comment is the same as our postID then we add it to comments
-            if (comment.postID  == postID) {
+            if (comment.postID === postID) {
                 //add the comment to our array
                 comments.push(comment);
 
@@ -159,8 +170,14 @@ function postController(postID)
             }
         }
 
-
-        ReactDOM.render(<PostDetailView data={data} editCommentHandler={editComment}loggedUser={kinvey.LoggedUsername()} comments ={comments} user={kinvey.LoggedID()} deleteEvent={deleteEvent} editEvent={editEvent} commentEvent={postComment}/>, document.getElementById('view'));
+        ReactDOM.render(<PostDetailView data={data}
+          editCommentHandler={editComment}
+          loggedUser={kinvey.LoggedUsername()}
+          comments={comments}
+          user={kinvey.LoggedID()}
+          deleteEvent={deleteEvent}
+          editEvent={editEvent}
+          commentEvent={postComment}/>, document.getElementById('view'));
 
     }
     //Send data to React to render.
