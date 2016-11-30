@@ -72,8 +72,6 @@ function loading(show)
 function homeController()
 {
     //The number of posts to show per page.
-    let limit=5;
-    //The current page.
     let page = 1;
 
     let databuffer = [];
@@ -81,9 +79,8 @@ function homeController()
     let total=0;
 
     let fuckThisShit =true ;
-
-
-    let pageRequestRunning = false;
+    let skip;
+    let limit=5;
 
     //Refresh.
     refreshSkeleton();
@@ -103,35 +100,41 @@ function homeController()
   function getTotal(data)
   {
       total = data.count;
+
+
      updateBuffer();
+
   }
   function updateBuffer()
   {
-      //Check if we have already loaded all posts.
-      if(databuffer.length === total) return;
-     //Set the loading trigger to true.
-     pageRequestRunning = true;
-     //Display loading message.
-     loading(true);
-     //Determine how many posts we need to skip to load the ones we need.
-     let skip = 0;
-     skip = total - (page * 5);
-     if(skip < 0)
-     {
-         limit = (total - databuffer.length);
-         skip = 0;
+    //Check if we have already loaded all posts.
+     if(databuffer.length <total) {
+         if(fuckThisShit){
+             skip=(total-5);
+             fuckThisShit=false;
+
+         }
+         console.dir("skipp"+skip)
+         console.dir("limit"+limit)
+
+         kinvey.GetData(`Memes?query={}&limit=${limit}&skip=${skip}`, undefined, dataGot, dataErrorGet);
+         skip-=5;
+         if(skip<0){
+
+             limit =(total-databuffer.length)-5;
+             skip=0;
+
+
+
+         }
+         loading(true);
+
      }
-
-
-
-     //Send request for specific post range.
-     kinvey.GetData(`Memes?query={}&limit=${limit}&skip=${skip}`, undefined, dataGot, dataErrorGet);
   }
   //If getting data was successful.
   function dataGot(data)
   {
-    //Set loading to trigger to false, as data is loaded.
-    pageRequestRunning = false;
+      console.dir(data);
     //Hide loading message.
     loading(false);
     //Reverse list so we have newest on top.
@@ -149,11 +152,9 @@ function homeController()
     {
       if($(window).scrollTop() + $(window).height() === $(document).height())
       {
-          //Check if we are already loading a page before starting to load the next one.
-          if(pageRequestRunning === false) nextPage();
+          nextPage();
       }
 
-      //Load the next page of data.
       function nextPage()
       {
           page++;
@@ -211,7 +212,6 @@ function postController(postID)
             }
         }
 
-        //Send data to React to render.
         ReactDOM.render(<PostDetailView data={data}
           editCommentHandler={editComment}
           loggedUser={kinvey.LoggedUsername()}
@@ -222,6 +222,8 @@ function postController(postID)
           commentEvent={postComment}/>, document.getElementById('view'));
 
     }
+    //Send data to React to render.
+
   }
 
   //If getting data was unsuccessful.
