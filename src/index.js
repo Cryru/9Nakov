@@ -456,7 +456,6 @@ function registerController()
 
 function createController()
 {
-    $(window).off("scroll")
   ReactDOM.render(<CreateView createEvent={Create}/>, document.getElementById('view'));
 
 
