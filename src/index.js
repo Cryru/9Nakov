@@ -232,8 +232,10 @@ function postController(postID)
   //Triggered when the edit button is clicked.
   function editEvent()
   {
-    //TODO
-    console.log(this.props.data._id); //The post id.
+      let editPostBtn=$("#postInfo button:contains('Edit')");
+      editPostBtn.hide();
+      let updatePostBtn = $("<button>Update Post</button>");
+      editPostBtn.parent().prepend(updatePostBtn);
   }
   //Triggered when the delete button is clicked.
   function deleteEvent()
@@ -287,6 +289,7 @@ function postController(postID)
 
 function loginController()
 {
+    $(window).off("scroll");
   //Render the login view.
   ReactDOM.render(<LoginView loginEvent={Login}/>, document.getElementById('view'));
 
@@ -366,6 +369,7 @@ function loginController()
 
 function registerController()
 {
+    $(window).off("scroll")
   //Render the registration view.
   ReactDOM.render(<RegisterView registerEvent={Register}/>, document.getElementById('view'));
 
