@@ -37,7 +37,7 @@ function refreshSkeleton()
   );
 
   //Clear scroll event.
-  $(window).scroll();
+  $(window).unbind('scroll');
 }
 
 //-------------------------------------------Feedback Functions--------------------------------------------\\
@@ -74,6 +74,10 @@ function homeController()
     //The number of posts to show per page.
     let page = 1;
 
+    let databuffer = [];
+
+    let total = 0;
+
     //Refresh.
     refreshSkeleton();
     //Render an empty home view.
@@ -87,7 +91,21 @@ function homeController()
   function getPosts()
   {
       //Send a request to kinvey to get all posts.
-      kinvey.GetData(`Memes`, undefined, dataGot, dataErrorGet)
+      kinvey.GetData('Memes/_count', undefined, getTotal, dataErrorGet)
+  }
+  function getTotal(data)
+  {
+     total = data.count;
+     updateBuffer();
+  }
+  function updateBuffer()
+  {
+    //Check if we have already loaded all posts.
+     if(databuffer.length < total)
+     {
+       kinvey.GetData(`Memes?query={}&limit=${5}&skip=${total - (page * 5)}`, undefined, dataGot, dataErrorGet);
+       loading(true);
+     }
   }
   //If getting data was successful.
   function dataGot(data)
@@ -95,10 +113,10 @@ function homeController()
     //Hide loading message.
     loading(false);
     //Reverse list so we have newest on top.
-    data = data.reverse();
+    databuffer.push.apply(databuffer, data.reverse());
 
     //Send data to React to render.
-    let homeview = <HomeView data={data} viewPostEvent={viewPost} page={page}/>;
+    let homeview = <HomeView data={databuffer} viewPostEvent={viewPost} page={page}/>;
     ReactDOM.render(homeview, document.getElementById('view'));
 
     //Attach an event to turn to the next page when scrolling to the bottom of the page.
@@ -115,8 +133,7 @@ function homeController()
       function nextPage()
       {
           page++;
-          homeview = <HomeView data={data} viewPostEvent={viewPost} page={page}/>;
-          ReactDOM.render(homeview, document.getElementById('view'));
+          updateBuffer();
       }
     }
   }
@@ -217,7 +234,6 @@ function postController(postID)
 
   }
 
-
   //Triggered when a user attempts to post a comment.
   function postComment()
   {
@@ -242,6 +258,8 @@ function loginController()
   //The event for when the logn form is submitted.
   function Login(e)
   {
+    //Refresh.
+    refreshSkeleton();
     //Prevent the submit event from reseting the page.
   	e.preventDefault();
 

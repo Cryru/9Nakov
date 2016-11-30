@@ -20,7 +20,7 @@ export default class HomeView extends Component {
             //Define an array to hold posts.
             let posts = [];
 
-            for (let i = 0; i < Math.min(5 * this.props.page, data.length); i++)
+            for (let i = 0; i < data.length; i++)
             {
                 posts.push(<Post key={i} id={data[i]._id} title={data[i].title} image={data[i].file} clickEvent={this.props.viewPostEvent}/>)
             }
