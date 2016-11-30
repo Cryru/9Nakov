@@ -242,8 +242,6 @@ function loginController()
   //The event for when the logn form is submitted.
   function Login(e)
   {
-    //Refresh.
-    refreshSkeleton();
     //Prevent the submit event from reseting the page.
   	e.preventDefault();
 
