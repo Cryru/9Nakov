@@ -38,7 +38,7 @@ export default class PostDetail extends Component {
 					        <img alt="" src={this.props.data.file}/></div>
 
 				          <textarea id="commentText"></textarea>
-				          <button onClick={this.props.commentEvent.bind(this)}>PostComment</button>
+				          <button onClick={this.props.commentEvent.bind(this)}>Comment</button>
                          {comments}
 			          </div>
       }

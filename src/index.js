@@ -113,9 +113,11 @@ function homeController()
      //Determine how many posts we need to skip to load the ones we need.
      let skip = 0;
      skip = total - (page * 5);
+
      if(skip < 0)
      {
          limit = (total - databuffer.length);
+
          skip = 0;
      }
 
@@ -144,8 +146,11 @@ function homeController()
     //The event to trigger on scroll that checks if we've scrolled to the bottom of the page.
     function scrolltoBottom()
     {
-      if($(window).scrollTop() + $(window).height() === $(document).height())
+      if(Math.round($(window).scrollTop() + $(window).height()) >= $(document).height())
       {
+
+          
+
           //Check if we are already loading a page before starting to load the next one.
           if(pageRequestRunning === false) nextPage();
       }
@@ -154,6 +159,7 @@ function homeController()
       function nextPage()
       {
           page++;
+
           updateBuffer();
       }
     }
@@ -240,7 +246,7 @@ function postController(postID)
   //Triggered when the delete button is clicked.
   function deleteEvent()
   {
-    //TODO
+
       loading(true);
       // transform the postID in readbale format
       let postID = this.props.data._id;
