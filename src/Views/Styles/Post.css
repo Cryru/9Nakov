@@ -1,6 +1,8 @@
 .post h1
 {
+
   font-family: "Segoe UI", "Calibri";
+  color:white;
   margin: 0px;
   margin-bottom: 5px;
   text-align: center;
@@ -9,7 +11,7 @@
 .post
 {
   max-width: 600px;
-  background: lightgray;
+  background: black;
   border-radius: 10px;
   display: block;
   padding: 20px;
