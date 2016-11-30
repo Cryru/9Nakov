@@ -76,7 +76,11 @@ function homeController()
 
     let databuffer = [];
 
-    let total = 0;
+    let total=0;
+
+    let fuckThisShit =true ;
+    let skip;
+    let limit=5;
 
     //Refresh.
     refreshSkeleton();
@@ -95,21 +99,42 @@ function homeController()
   }
   function getTotal(data)
   {
-     total = data.count;
+      total = data.count;
+
+
      updateBuffer();
+
   }
   function updateBuffer()
   {
     //Check if we have already loaded all posts.
-     if(databuffer.length < total)
-     {
-       kinvey.GetData(`Memes?query={}&limit=${5}&skip=${total - (page * 5)}`, undefined, dataGot, dataErrorGet);
-       loading(true);
+     if(databuffer.length <total) {
+         if(fuckThisShit){
+             skip=(total-5);
+             fuckThisShit=false;
+
+         }
+         console.dir("skipp"+skip)
+         console.dir("limit"+limit)
+
+         kinvey.GetData(`Memes?query={}&limit=${limit}&skip=${skip}`, undefined, dataGot, dataErrorGet);
+         skip-=5;
+         if(skip<0){
+
+             limit =(total-databuffer.length)-5;
+             skip=0;
+
+
+
+         }
+         loading(true);
+
      }
   }
   //If getting data was successful.
   function dataGot(data)
   {
+      console.dir(data);
     //Hide loading message.
     loading(false);
     //Reverse list so we have newest on top.
