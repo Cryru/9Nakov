@@ -25,7 +25,6 @@ export default class HomeView extends Component {
                 posts.push(<Post key={i} id={data[i]._id} title={data[i].title} image={data[i].file} clickEvent={this.props.viewPostEvent}/>)
             }
 
-
             return <div>
                 <div id="posts">
                     {posts}

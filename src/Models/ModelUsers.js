@@ -20,10 +20,10 @@ function loggedUsername(kinvey){
     return kinvey.LoggedUsername();
 }
 function loggedID(kinvey) {
-    kinvey.LoggedID();
+    return kinvey.LoggedID();
 }
 function loggedStatus(kinvey){
 
-    kinvey.LoggedStatus();
+    return kinvey.LoggedStatus();
 }
 export default {loginGuest,loginUser,registerUser,logOut,loggedUsername,loggedID,loggedStatus};
