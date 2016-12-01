@@ -39,7 +39,7 @@ export default class PostDetail extends Component {
             <hr/>
 				          <textarea id="commentText"></textarea>
 				          <button id="commentBtn"onClick={this.props.commentEvent.bind(this)}>Comment</button>
-                         {comments.reverse()}
+                         {comments}
 			          </div>
       }
       else

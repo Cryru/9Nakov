@@ -222,10 +222,22 @@ function postController(postID)
 				{
 					//add the comment to our array
 					comments.push(comment);
-
-
 				}
 			}
+
+      //Sort comments by creation date.
+      comments = comments.sort(function (a, b) {
+            var key1 = new Date(a._kmd.ect);
+            var key2 = new Date(b._kmd.ect);
+
+            if (key1 > key2) {
+              return -1;
+            } else if (key1 == key2) {
+              return 0;
+            } else {
+              return 1;
+            }
+          });
 
 			//Send data to React to render.
 			ReactDOM.render(<PostDetailView data={data}
