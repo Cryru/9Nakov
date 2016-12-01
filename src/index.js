@@ -296,15 +296,22 @@ function postController(postID)
 		function editComment()
 		{
 			let editBtn=$(`#${this.props.id} button:contains('Edit')`)
+      $(`#${this.props.id} button:contains('Delete')`).hide();
 			editBtn.hide();
-			editBtn.parent().append($("<button>Update Comment</button><br/>").on("click", updateComment.bind(this)));
-			let commentSection=$(`#${this.props.id} p`).hide();
-			commentSection.parent().append($("<textarea/>").text(this.props.text))
+      $(`#${this.props.id} span`).hide()
+      editBtn.parent().append($("<textarea id='tempeditarea'>").text(this.props.text))
+			editBtn.parent().append($("<button id='tempeditbutton'>Update Comment</button><br/>").on("click", updateComment.bind(this)));
+
 
 			function updateComment()
 			{
 				//TODO:
 
+        $("#tempeditbutton").remove();
+        $("#tempeditarea").remove();
+        $(`#${this.props.id} button:contains('Delete')`).show();
+        editBtn.show();
+        $(`#${this.props.id} span`).show()
 			}
 
 		}
@@ -333,14 +340,15 @@ function postController(postID)
 
 	function loginController()
 	{
+    //Refresh.
+    refreshSkeleton();
+
 		//Render the login view.
 		ReactDOM.render( < LoginView loginEvent={Login}	/>, document.getElementById('view'));
 
 			//The event for when the login form is submitted.
 			function Login(e)
 			{
-				//Refresh.
-				refreshSkeleton();
 				//Prevent the submit event from reseting the page.
 				e.preventDefault();
 
@@ -412,7 +420,7 @@ function postController(postID)
 
 		function registerController()
 		{
-			$(window).off("scroll")
+			refreshSkeleton();
 				//Render the registration view.
 			ReactDOM.render(<RegisterView registerEvent={Register}/>, document.getElementById('view'));
 
@@ -493,6 +501,9 @@ function postController(postID)
 
 			function createController()
 			{
+
+        refreshSkeleton();
+
 				ReactDOM.render(<CreateView createEvent={Create}/>, document.getElementById('view'));
 
 
