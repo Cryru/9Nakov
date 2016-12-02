@@ -46,6 +46,7 @@ function refreshSkeleton()
   document.getElementById('root')
 );
 
+
 }
 
 //-------------------------------------------Feedback Functions--------------------------------------------\\
@@ -106,7 +107,8 @@ function homeController()
 	function getPosts()
 	{
 		//Send a request to kinvey to get all posts.
-		kinvey.GetData('Memes/_count', undefined, getTotal, dataErrorGet)
+		ModelPosts.getPosts(kinvey,getTotal,dataErrorGet);
+
 	}
 
 	function getTotal(data)
@@ -133,7 +135,9 @@ function homeController()
 		}
 
 		//Send request for specific post range.
-		kinvey.GetData(`Memes?query={}&limit=${limit}&skip=${skip}`, undefined, dataGot, dataErrorGet);
+		ModelPosts.getPostRange(kinvey,limit,skip,dataGot,dataErrorGet);
+		//if this does not work VVVVVVV is the original request
+		//kinvey.GetData(`Memes?query={}&limit=${limit}&skip=${skip}`, undefined, dataGot, dataErrorGet);
 	}
 	//If getting data was successful.
 	function dataGot(data)
@@ -208,7 +212,9 @@ function postController(postID)
 		//Hide loading message.
 		loading(false);
 		//getting the comments
-		kinvey.GetData("comments", undefined, dataGotComments, dataErrorGet);
+		ModelPosts.getComments(kinvey, dataGotComments, dataErrorGet);
+		//if this doesnot work here is the original request VVVVVV
+		//kinvey.GetData("comments", undefined, dataGotComments, dataErrorGet);
 
 		function dataGotComments(allComments)
 		{
@@ -277,7 +283,9 @@ function postController(postID)
 			// transform the postID in readbale format
 			let postID=this.props.data._id;
 			//send request to Kinvey to delete the post
-			kinvey.DeleteData("Memes", postID, dataDeleted, errorNotDeleted);
+			ModelPosts.deletePost(kinvey,postID,dataDeleted,errorNotDeleted);
+			//if this doesnot work here is the original request VVVVV
+			//kinvey.DeleteData("Memes", postID, dataDeleted, errorNotDeleted);
 			// if the post is deleted then redirect to home
 			function dataDeleted()
 			{
@@ -321,6 +329,7 @@ function postController(postID)
 		{
 			//The post id.
 			let text=$('#commentText').val(); //The comment entered.
+			if(text.length >0){}
 			let author=ModelUsers.loggedUsername(kinvey);
 			let postID=this.props.data._id;
 			let comment={
@@ -328,8 +337,13 @@ function postController(postID)
 				text: text,
 				postID: postID
 			};
-			kinvey.CreateData("comments", comment, successPost);
-
+            if(text.length >0) {
+                ModelPosts.createComment(kinvey, comment, successPost);
+                //if this doesnot work here is the original request
+                //kinvey.CreateData("comments", comment, successPost);
+            }else{
+            	message("You have to type something first");
+			}
 			function successPost()
 			{
 				$('#commentText').val("");

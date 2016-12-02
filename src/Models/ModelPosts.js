@@ -9,4 +9,16 @@ function getPosts(kinvey,Callback,CallError)
 function getOnePost(kinvey,postID,Callback,CallError){
     kinvey.GetData("Memes", postID, Callback, CallError);
 }
-export default {getPosts,getOnePost}
+function getPostRange(kinvey,limit,skip,Callback,CallError) {
+    kinvey.GetData(`Memes?query={}&limit=${limit}&skip=${skip}`, undefined, Callback, CallError);
+}
+function getComments(kinvey,Callback,CallError){
+    kinvey.GetData("comments",undefined,Callback,CallError);
+}
+function deletePost(kinvey,postID,Callback,CallError){
+    kinvey.DeleteData("Memes", postID, Callback, CallError);
+}
+function createComment(kinvey,commentInfo,Callback){
+    kinvey.CreateData("comments",commentInfo,Callback);
+}
+export default {getPosts,getOnePost,getPostRange,getComments,deletePost,createComment}
