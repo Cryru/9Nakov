@@ -238,7 +238,7 @@ function postController(postID)
 
             if (key1 > key2) {
               return -1;
-            } else if (key1 == key2) {
+            } else if (key1 === key2) {
               return 0;
             } else {
               return 1;
@@ -274,9 +274,15 @@ function postController(postID)
 		{
 			let editPostBtn=$("#postInfo button:contains('Edit')");
 			editPostBtn.hide();
-			let updatePostBtn=$("<button>Update Post</button>");
+			let updatePostBtn=$("<button '>Update Post</button>").on("click",updatePost.bind(this))
 			editPostBtn.parent().prepend(updatePostBtn);
 		}
+
+		function updatePost(){
+		console.dir(this.props)
+			//TODO: OPRAI GO WE GEI
+}
+
 		//Triggered when the delete button is clicked.
 		function deleteEvent()
 		{
@@ -303,17 +309,16 @@ function postController(postID)
 			}
 		}
 
-		function editComment()
-		{
-			var id =this.props.id;
-			let editBtn=$(`#${id} button:contains('Edit')`)
-      $(`#${id} button:contains('Delete')`).hide();
-			editBtn.hide();
-      $(`#${id} span`).hide()
-      editBtn.parent().append($("<textarea id='tempeditarea'>").text(this.props.text))
-			editBtn.parent().append($("<button id='tempeditbutton'>Update Comment</button><br/>").on("click", updateComment.bind(this)));
+		function editComment() {
+            var id = this.props.id;
+            let editBtn = $(`#${id} button:contains('Edit')`)
+            $(`#${id} button:contains('Delete')`).hide();
+            editBtn.hide();
+            $(`#${id} span`).hide()
+            editBtn.parent().append($("<textarea id='tempeditarea'>").text(this.props.text))
+            editBtn.parent().append($("<button id='tempeditbutton'>Update Comment</button><br/>").on("click", updateComment.bind(this)));
 
-
+        }
 			function updateComment() {
                 let textToUpdate = $("#tempeditarea").val();
                 let updateObj = {
@@ -344,7 +349,7 @@ function postController(postID)
                 message("Something happened.Please try again");
             }
 
-		}
+
 	    function deleteComment(){
 		console.log("I made it");
 		console.log(this);
