@@ -196,7 +196,7 @@ function homeController()
 }
 
 function postController(postID)
-{
+{     var idOfThePost = postID;
 	//Refresh.
 	refreshSkeleton();
 	//Render an empty post detail view.
@@ -246,14 +246,16 @@ function postController(postID)
           });
 
 			//Send data to React to render.
-			ReactDOM.render(<PostDetailView data={data}
-				editCommentHandler={editComment}
-				loggedUser={ModelUsers.loggedUsername(kinvey)}
-				comments={comments}
-				user={ModelUsers.loggedID(kinvey)}
-				deleteEvent={deleteEvent}
-				editEvent={editEvent}
-				commentEvent={postComment}/>
+			ReactDOM.render(<PostDetailView
+					data={data}
+					editCommentHandler={editComment}
+					deleteCommentHandler={deleteComment}
+					loggedUser={ModelUsers.loggedUsername(kinvey)}
+				    comments={comments}
+				    user={ModelUsers.loggedID(kinvey)}
+				    deleteEvent={deleteEvent}
+				    editEvent={editEvent}
+				    commentEvent={postComment}/>
         , document.getElementById('view'));
 
 			}
@@ -303,27 +305,58 @@ function postController(postID)
 
 		function editComment()
 		{
-			let editBtn=$(`#${this.props.id} button:contains('Edit')`)
-      $(`#${this.props.id} button:contains('Delete')`).hide();
+			var id =this.props.id;
+			let editBtn=$(`#${id} button:contains('Edit')`)
+      $(`#${id} button:contains('Delete')`).hide();
 			editBtn.hide();
-      $(`#${this.props.id} span`).hide()
+      $(`#${id} span`).hide()
       editBtn.parent().append($("<textarea id='tempeditarea'>").text(this.props.text))
 			editBtn.parent().append($("<button id='tempeditbutton'>Update Comment</button><br/>").on("click", updateComment.bind(this)));
 
 
-			function updateComment()
-			{
-				//TODO:
+			function updateComment() {
+                let textToUpdate = $("#tempeditarea").val();
+                let updateObj = {
+                	postID : idOfThePost,
+                	text : textToUpdate,
+					author: this.props.author
+				};
+                console.log(this);
+                console.log(this.props.id);
+                kinvey.UpdateData("comments",this.props.id, updateObj, Update, Error);
 
-        $("#tempeditbutton").remove();
-        $("#tempeditarea").remove();
-        $(`#${this.props.id} button:contains('Delete')`).show();
-        editBtn.show();
-        $(`#${this.props.id} span`).show()
-			}
+            }//if everything is okay update to show the new comment
+            function Update() {
+                // this was the original way of doing it
+				// VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+                //$("#tempeditbutton").remove();
+                //$("#tempeditarea").remove();
+                //$(`#${id} button:contains('Delete')`).show();
+                //editBtn.show();
+                //$(`#${id} span`).show()
+
+				//this is how we do it now
+                postController(idOfThePost);
+
+            }
+
+            function Error() {
+                message("Something happened.Please try again");
+            }
 
 		}
-
+	    function deleteComment(){
+		console.log("I made it");
+		console.log(this);
+		kinvey.DeleteData("comments",this.props.id,deleteSuccessful,deleteFail);
+		}
+		function deleteSuccessful(){
+	    	message("You succesfully deleted the comment");
+	    	postController(postID);
+		}
+		function deleteFail(){
+			message("Something went wrong.Please try again");
+		}
 		//Triggered when a user attempts to post a comment.
 		function postComment()
 		{

@@ -27,7 +27,12 @@ export default class PostDetail extends Component {
             for (let i = 0; i < this.props.comments.length; i++)
             {
 
-                comments.push(<Comment key={i} id={this.props.comments[i]._id}  editCommentHandler={this.props.editCommentHandler} loggedUser={this.props.loggedUser} author={this.props.comments[i].author} text={this.props.comments[i].text}/>)
+                comments.push(<Comment key={i} id={this.props.comments[i]._id}
+                                       editCommentHandler={this.props.editCommentHandler}
+                                       deleteCommentHandler={this.props.deleteCommentHandler}
+                                       loggedUser={this.props.loggedUser}
+                                       author={this.props.comments[i].author}
+                                       text={this.props.comments[i].text}/>)
             }
         }
 

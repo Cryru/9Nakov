@@ -8,7 +8,7 @@ export default class Comment extends Component{
                 <span>{this.props.text}</span>
                 <div>
                     <button onClick={this.props.editCommentHandler.bind(this)}>Edit</button>
-                    <button onClick={this.props.deleteCommentHandler}>Delete</button>
+                    <button onClick={this.props.deleteCommentHandler.bind(this)}>Delete</button>
                 </div>
 
             </div>
