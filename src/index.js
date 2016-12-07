@@ -97,20 +97,20 @@ function refreshSkeleton()
 //Displays a message to the user, disappears after a couple seconds, or when clicked.
 function message(txt)
 {
-    //TODO
+
     console.log(txt);
 }
 //Displays an error to the user, disappears only when clicked.
 function error(txt)
 {
     loading(false);
-    //TODO
+
     console.error(txt);
 }
 //Displays a loading message to the user, disappears only when loading(False) is called or an error.
 function loading(show)
 {
-    //TODO
+
     //if true show loading message if false then hide the message.
     if (show)
     {
