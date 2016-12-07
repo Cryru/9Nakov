@@ -11,7 +11,7 @@ export default class RegisterView extends Component {
     						<input name="Password" type="password" id="regPassword" placeholder="Password" required />
     						<input name="PasswordConfirm" type="password" id="regPasswordConf" placeholder="Password Confirm" required />
     						<input type="submit" value="Register" /><br/>
-    						Already registered? <a onClick={this.props.loginHereHandler}>Click here to login.</a>
+    						Already registered? <a id="loginHere" onClick={this.props.loginHereHandler}>Click here to login.</a>
     					</form>
     				</div>
   }
