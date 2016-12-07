@@ -101,7 +101,8 @@ function homeController()
     //Show loading message.
     loading(true);
     //Check if not logged in, in which case log in, otherwise proceed with request.
-    if (ModelUsers.loggedStatus(kinvey)) ModelPosts.getPosts(kinvey, getTotal, dataErrorGet); else ModelUsers.loginGuest(kinvey, getPosts);
+    if (ModelUsers.loggedStatus(kinvey)) ModelPosts.getPosts(kinvey, getTotal, dataErrorGet);
+    else ModelUsers.loginGuest(kinvey, getPosts);
 
     //Data request.
     function getPosts()
@@ -290,14 +291,15 @@ function postController(postID)
              title: text,
 			file: this.props.data.file
 		}
-        kinvey.UpdateData("Memes",postToUpdateID,objectToUpdate,successfulUpdate,errorUpdate);
+		ModelPosts.updatePost(kinvey,postToUpdateID,objectToUpdate,successfulUpdate,errorUpdate);
+        //kinvey.UpdateData("Memes",postToUpdateID,objectToUpdate,successfulUpdate,errorUpdate);
 
 		function successfulUpdate(){
 			message("Update successful");
 			postController(postToUpdateID);
 		}
 		function errorUpdate(){
-			message("Something went wrong, please try again");
+			error("Something went wrong, please try again");
 		}
     }
 
@@ -323,7 +325,7 @@ function postController(postID)
         function errorNotDeleted()
         {
             loading(false);
-            message("Try again");
+            error("Try again");
         }
     }
 
@@ -344,9 +346,8 @@ function postController(postID)
             text : textToUpdate,
             author: this.props.author
         };
-        console.log(this);
-        console.log(this.props.id);
-        kinvey.UpdateData("comments",this.props.id, updateObj, Update, Error);
+        ModelPosts.updateComment(kinvey,this.props.id,updateObj,Update,Error);
+        //kinvey.UpdateData("comments",this.props.id, updateObj, Update, Error);
 
     }//if everything is okay update to show the new comment
     function Update() {
@@ -364,14 +365,14 @@ function postController(postID)
     }
 
     function Error() {
-        message("Something happened.Please try again");
+        error("Something happened.Please try again");
     }
 
 
     function deleteComment(){
-        console.log("I made it");
-        console.log(this);
-        kinvey.DeleteData("comments",this.props.id,deleteSuccessful,deleteFail);
+    	let commentID = this.props.id;
+        ModelPosts.deleteComment(kinvey,commentID,deleteSuccessful,deleteFail);
+        //kinvey.DeleteData("comments",commentID,deleteSuccessful,deleteFail);
     }
     function deleteSuccessful(){
         message("You succesfully deleted the comment");
@@ -628,11 +629,16 @@ function createController()
     function imageUploaded(response)
     {
         //If the upload is sucessful, we take the uploaded image link and send it to kinvey.
-        kinvey.CreateData("Memes",
-            {
-                title: $("#creTitle").val(),
-                file: response.data.link
-            }, successCreate, errorCreate);
+		let objPost = {
+            title: $("#creTitle").val(),
+            file: response.data.link
+        };
+		ModelPosts.createPost(kinvey,objPost,successCreate,errorCreate);
+        //kinvey.CreateData("Memes",
+        //    {
+        //        title: $("#creTitle").val(),
+        //        file: response.data.link
+        //    }, successCreate, errorCreate);
     }
 
     //If the data was successfully created.
