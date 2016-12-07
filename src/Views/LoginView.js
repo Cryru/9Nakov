@@ -10,7 +10,7 @@ export default class LoginView extends Component {
 				<input name="Username" type="text" id="loginUsername" placeholder="Username" required />
 				<input name="Password" type="password" id="loginPassword" placeholder="Password" required />
 				<input type="submit" value="Login"/><br/>
-				Not registered? <a>Click here to register.</a>
+				Not registered? <a onClick={this.props.registerHereHandler}>Click here to register.</a>
 			</form>
 		</div>
     }
