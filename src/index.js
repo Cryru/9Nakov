@@ -453,19 +453,23 @@ function postController(postID)
             text: text,
             postID: postID
         };
-        //check if it's not empty and if it is dont send shit to kinvey
-        if(text.length >0) {
+        if(ModelUsers.loggedUsername(kinvey)=="guest") {
+            error("Log in first");
+            registerController();
+        }else {
+            //check if it's not empty and if it is dont send shit to kinvey
+            if (text.length > 0) {
 
-            ModelPosts.createComment(kinvey, comment, successPost);
-            //if this doesnot work here is the original request
-            //kinvey.CreateData("comments", comment, successPost);
-        }else{
-            message("You have to type something first");
-        }
-        function successPost()
-        {
-            $('#commentText').val("");
-            postController(postID);
+                ModelPosts.createComment(kinvey, comment, successPost);
+                //if this doesnot work here is the original request
+                //kinvey.CreateData("comments", comment, successPost);
+            } else {
+                message("You have to type something first");
+            }
+            function successPost() {
+                $('#commentText').val("");
+                postController(postID);
+            }
         }
     }
 }
