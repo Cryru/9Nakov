@@ -16,6 +16,7 @@ import ModelUsers from './Models/ModelUsers';
 import ModelPosts from './Models/ModelPosts';
 //-------------------------------------------Start Sequence--------------------------------------------\\
 //Initalize Kinvey application. SoulKinvey.js
+
 let kinvey=new Kinvey("kid_SyCmuImMl", "f55fee035573491d8a4f32e3a11f3bc4");
 let atHome=true;
 
@@ -48,7 +49,50 @@ function refreshSkeleton()
 
 
 }
-
+// on this file you will find the following:
+// homeController
+//   getPosts
+//   getTotal
+//   updateBuffer
+//   dataGot
+//     scrollBottom
+//   dataErrorGet
+//   viewPost
+// postController
+//   dataGot
+//     dataGotComments
+//   dataErrorGet
+//   editEvent
+//   updatePost
+//     successUpdate
+//     errorUpdate
+//   deleteEvent
+//     dataDeleted
+//     errorNotDeleted
+//   editComment
+//   updateComment
+//   Update
+//   Error
+//   deleteComment
+//   deleteSuccessful
+//   deleteFail
+//   postComment
+//     successPost
+// loginController
+//   Login
+//   successLogin
+//   errorLogin
+// registerController
+//   Register
+//   successRegister
+//   errorRegister
+// createController
+//   Create
+//   createFileLoader
+//   imageUploaded
+//   successCreate
+//   errorCreate
+// logout
 //-------------------------------------------Feedback Functions--------------------------------------------\\
 //Displays a message to the user, disappears after a couple seconds, or when clicked.
 function message(txt)
@@ -197,7 +241,9 @@ function homeController()
 }
 
 function postController(postID)
-{     var idOfThePost = postID;
+{
+	//this will be needed later
+	var idOfThePost = postID;
     //Refresh.
     refreshSkeleton();
     //Render an empty post detail view.
@@ -284,21 +330,24 @@ function postController(postID)
     }
 
     function updatePost(){
+    	// get the text from the textarea
 		let text = $("#postToUpdate").val();
         let postToUpdateID = this.props.data._id;
-
+        // remake the object with the new title to be uploaded
         let objectToUpdate = {
              title: text,
 			file: this.props.data.file
-		}
+		};
+		//upload it
 		ModelPosts.updatePost(kinvey,postToUpdateID,objectToUpdate,successfulUpdate,errorUpdate);
         //kinvey.UpdateData("Memes",postToUpdateID,objectToUpdate,successfulUpdate,errorUpdate);
-
+        //if everything was successful refresh
 		function successfulUpdate(){
 			message("Update successful");
 			postController(postToUpdateID);
 		}
 		function errorUpdate(){
+
 			error("Something went wrong, please try again");
 		}
     }
@@ -328,24 +377,31 @@ function postController(postID)
             error("Try again");
         }
     }
-
+    //triggered when the editComment button is clicked
     function editComment() {
+    	// take the id in readable format
+		// "this" is given to the function when its triggered and it represents the comment with all the info
         var id = this.props.id;
+        //change the button from Edit to Update
         let editBtn = $(`#${id} button:contains('Edit')`)
         $(`#${id} button:contains('Delete')`).hide();
         editBtn.hide();
         $(`#${id} span`).hide()
         editBtn.parent().append($("<textarea id='tempeditarea'>").text(this.props.text))
+		//here is the Update button to be shown after edit being clicked
         editBtn.parent().append($("<button id='tempeditbutton'>Update Comment</button><br/>").on("click", updateComment.bind(this)));
 
     }
     function updateComment() {
+    	//first we take the new text from the textarea
         let textToUpdate = $("#tempeditarea").val();
+        //remake the object with the new textarea
         let updateObj = {
             postID : idOfThePost,
             text : textToUpdate,
             author: this.props.author
         };
+        //send to kinvey to update
         ModelPosts.updateComment(kinvey,this.props.id,updateObj,Update,Error);
         //kinvey.UpdateData("comments",this.props.id, updateObj, Update, Error);
 
@@ -370,6 +426,7 @@ function postController(postID)
 
 
     function deleteComment(){
+    	//this is given by default to the function and is the comment with all the info
     	let commentID = this.props.id;
         ModelPosts.deleteComment(kinvey,commentID,deleteSuccessful,deleteFail);
         //kinvey.DeleteData("comments",commentID,deleteSuccessful,deleteFail);
@@ -386,15 +443,19 @@ function postController(postID)
     {
         //The post id.
         let text=$('#commentText').val(); //The comment entered.
-        if(text.length >0){}
+		// get the author
         let author=ModelUsers.loggedUsername(kinvey);
+        //"this" is given by default and represents the comment with all of the info
         let postID=this.props.data._id;
+
         let comment={
             author: author,
             text: text,
             postID: postID
         };
+        //check if it's not empty and if it is dont send shit to kinvey
         if(text.length >0) {
+
             ModelPosts.createComment(kinvey, comment, successPost);
             //if this doesnot work here is the original request
             //kinvey.CreateData("comments", comment, successPost);
@@ -415,7 +476,8 @@ function loginController()
     refreshSkeleton();
 
     //Render the login view.
-    ReactDOM.render( < LoginView registerHereHandler={registerController} loginEvent={Login}	/>, document.getElementById('view'));
+    ReactDOM.render( < LoginView registerHereHandler={registerController} loginEvent={Login}	/>,
+		document.getElementById('view'));
 
     //The event for when the login form is submitted.
     function Login(e)
