@@ -276,15 +276,29 @@ function postController(postID)
         editPostBtn.hide();
         let updatePostBtn=$("<button '>Update Post</button>").on("click",updatePost.bind(this))
         editPostBtn.parent().prepend(updatePostBtn);
-        let textarea= $('<textarea/>').text(this.props.data.title);
+        let textarea= $('<textarea id="postToUpdate"/>').text(this.props.data.title);
         $("#postInfo h1").remove();
         $("#postInfo").prepend(textarea)
 
     }
 
     function updatePost(){
-        console.dir(this.props)
-        //TODO: OPRAI GO WE GEI
+		let text = $("#postToUpdate").val();
+        let postToUpdateID = this.props.data._id;
+
+        let objectToUpdate = {
+             title: text,
+			file: this.props.data.file
+		}
+        kinvey.UpdateData("Memes",postToUpdateID,objectToUpdate,successfulUpdate,errorUpdate);
+
+		function successfulUpdate(){
+			message("Update successful");
+			postController(postToUpdateID);
+		}
+		function errorUpdate(){
+			message("Something went wrong, please try again");
+		}
     }
 
     //Triggered when the delete button is clicked.
