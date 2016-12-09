@@ -40,7 +40,7 @@ function updatePost(kinvey,postID,obj,Callback,CallError){
 }
 function updateComment(kinvey,commentID,obj,Callback,CallError){
     //Send a request to update a comment by given id and the comment's info as an object
-    kinvey.UpdateData("comment",commentID,obj,Callback,CallError);
+    kinvey.UpdateData("comments",commentID,obj,Callback,CallError);
 }
 export default {getPosts,
                 getOnePost,
