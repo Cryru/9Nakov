@@ -441,6 +441,10 @@ function postController(postID)
     //Triggered when a user attempts to post a comment.
     function postComment()
     {
+        console.log(this);
+        console.log(this.refs);
+      var that = this;
+        this.refs.btn.setAttribute("disabled", "disabled");
         //The post id.
         let text=$('#commentText').val(); //The comment entered.
 		// get the author
@@ -455,6 +459,7 @@ function postController(postID)
         };
         if(ModelUsers.loggedUsername(kinvey)=="guest") {
             error("Log in first");
+            this.refs.btn.removeAttribute("disabled");
             registerController();
         }else {
             //check if it's not empty and if it is dont send shit to kinvey
@@ -464,11 +469,15 @@ function postController(postID)
                 //if this doesnot work here is the original request
                 //kinvey.CreateData("comments", comment, successPost);
             } else {
+                let that = this;
+                that.refs.btn.removeAttribute("disabled");
                 message("You have to type something first");
             }
             function successPost() {
                 $('#commentText').val("");
+                that.refs.btn.removeAttribute("disabled");
                 postController(postID);
+
             }
         }
     }
@@ -648,14 +657,15 @@ function createController()
     {
         //Prevent the submit event from reseting the page.
         e.preventDefault();
-
+        $('input[type="submit"]').prop('disabled', true);
         //Get file from input
         let file=$("#creFile")[0].files[0];
 
         //Check if file fits in size.
         if ((file.size / 1024) > 9000)
         {
-            error("You can only upload pictures smaller than 9MB.")
+            error("You can only upload pictures smaller than 9MB.");
+            $('input[type="submit"]').prop('disabled', false);
             return;
         }
 
@@ -710,6 +720,7 @@ function createController()
     //If the data was successfully created.
     function successCreate(response)
     {
+        $('input[type="submit"]').prop('disabled', false);
         //Display message.
         message("Post Created!");
         //Redirect to post page.
@@ -718,6 +729,7 @@ function createController()
 
     function errorCreate(response)
     {
+        $('input[type="submit"]').prop('disabled', false);
         //Internet is out.
         if (response.readystate === 0 && response.status === 0)
         {

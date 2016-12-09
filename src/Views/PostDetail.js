@@ -20,10 +20,11 @@ export default class PostDetail extends Component {
               <button onClick={this.props.deleteEvent.bind(this)}>Delete</button>
           </div>
         }
+        //if there are no comments show "No comments for this post"
         if(this.props.comments===undefined||this.props.comments.length===0){
             comments.push(<div id="noComment" key="1">No Comments for this post</div>)
         }else{
-
+          //if there are push them to the comments array with all needed functions
             for (let i = 0; i < this.props.comments.length; i++)
             {
 
@@ -43,7 +44,7 @@ export default class PostDetail extends Component {
 					        <img alt="" src={this.props.data.file}/></div>
             <hr/>
 				          <textarea id="commentText"></textarea>
-				          <button id="commentBtn"onClick={this.props.commentEvent.bind(this)}>Comment</button>
+				          <button  ref="btn" id="commentBtn"onClick={this.props.commentEvent.bind(this)}>Comment</button>
                          {comments}
 			          </div>
       }

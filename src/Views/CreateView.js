@@ -13,7 +13,7 @@ export default class CreateView extends Component {
     						<label id="selectImage">Select an image:</label>
 							<br></br>
     						<input name="File" type="file" id="creFile" accept="image/*" required />
-							<br></br>
+
     						<label id="maximumSize">Maximum: 9MB</label>
     						<input type="submit" value="Post!" />
     					</form>
