@@ -34,6 +34,7 @@ function refreshSkeleton()
     //Tracks the home page, to prevent redirections on finished loading.
     atHome=false;
 
+
     ReactDOM.render(
 		<div>
 			<Navigation kinvey={kinvey}
@@ -142,7 +143,6 @@ function homeController()
     atHome=true;
     //Render an empty home view.
     ReactDOM.render(<HomeView />, document.getElementById('view'));
-    //Show loading message.
     loading(true);
     //Check if not logged in, in which case log in, otherwise proceed with request.
     if (ModelUsers.loggedStatus(kinvey)) ModelPosts.getPosts(kinvey, getTotal, dataErrorGet);
@@ -168,7 +168,6 @@ function homeController()
         if (databuffer.length === total) return;
         //Set the loading trigger to true.
         pageRequestRunning=true;
-        //Display loading message.
         loading(true);
         //Determine how many posts we need to skip to load the ones we need.
         let skip=0;
